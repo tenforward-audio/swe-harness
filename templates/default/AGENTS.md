@@ -2,34 +2,26 @@
 
 ## Product
 
-- Project: `SWE Harness`
-- Outcome: Keep software-engineering rules, work cards, capability policy, and
-  durable decisions versioned beside the project they govern.
-- Primary users: Codex agents and maintainers of software projects.
-- Supported platforms or environments: Codex projects backed by a local
-  filesystem, with Git repositories used for durable checkpoints.
+- Project: `{{PROJECT_NAME}}`
+- Outcome: {{PROJECT_OUTCOME}}
+- Primary users: {{PRIMARY_USERS}}
+- Supported platforms or environments: {{SUPPORTED_PLATFORMS}}
 
 Do not execute unresolved uppercase placeholder text as a command. Treat it as
 missing project setup and ask only when the current task depends on it.
 
 ## Non-negotiable rules
 
-- Repository files are canonical. Do not silently replace their cards,
-  decisions, or policy with machine-local or external service state.
+- {{PROJECT_SAFETY_RULES}}
 - Preserve user changes and keep unrelated work out of the diff.
 - Never commit secrets, credentials, private data, or unlicensed fixtures.
 - Do not weaken validation, suppress failures, or update golden files blindly.
 
 ## Stack and boundaries
 
-- Stack: Markdown and YAML, with a Python standard-library CLI and validator.
-- Architecture: `templates/default/` owns reusable generic content;
-  `swe_harness/` owns deterministic rendering, reconciliation, and validation;
-  `plugins/swe-harness/` is a thin optional Codex interface; this root contract
-  routes intent; and `.agents/` owns project policy and live work state.
-- Compatibility constraints: preserve the installed generic harness contract
-  recorded in `.agents/HARNESS.md`; declare real consumers before adding
-  migration or legacy-compatibility behavior.
+- Stack: {{PROJECT_STACK}}
+- Architecture: {{PROJECT_ARCHITECTURE}}
+- Compatibility constraints: {{COMPATIBILITY_CONSTRAINTS}}
 - Keep behavior in the narrowest layer that owns it; avoid speculative
   abstractions and duplicated sources of truth.
 
@@ -105,17 +97,15 @@ Load only the skill and references relevant to the current task.
 
 ## Quality commands
 
-- Setup: `python3 --version`
-- Affected-layer gates: `python3 scripts/check_harness.py`
-- Format check: not configured; keep Markdown readable and Python PEP 8 aligned.
-- Lint: not configured; the structural validator is the current policy gate.
-- Type or static checks:
-  `python3 -m compileall -q swe_harness scripts plugins/swe-harness/scripts`
-- Tests: `python3 -m unittest discover -s tests`
-- Build: `python3 scripts/build_plugin.py --output PATH_TO_NEW_DIRECTORY`
-- Cross-stack checks without builds: `python3 scripts/check_harness.py`
-- Full checkpoint and release gate:
-  `python3 -m unittest discover -s tests && python3 scripts/check_harness.py && python3 -m compileall -q swe_harness scripts plugins/swe-harness/scripts`
+- Setup: `{{SETUP_COMMAND}}`
+- Affected-layer gates: `{{AFFECTED_LAYER_CHECK_COMMANDS}}`
+- Format check: `{{FORMAT_CHECK_COMMAND}}`
+- Lint: `{{LINT_COMMAND}}`
+- Type or static checks: `{{TYPECHECK_COMMAND}}`
+- Tests: `{{TEST_COMMAND}}`
+- Build: `{{BUILD_COMMAND}}`
+- Cross-stack checks without builds: `{{CHECK_COMMAND}}`
+- Full checkpoint and release gate: `{{FULL_CHECK_COMMAND}}`
 
 While iterating, run focused tests and only the affected-layer gate. Run the
 full gate once after the coherent change and before checkpoint or release.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Set Up SWE Harness"
+  short_description: "Install and reconcile repository harnesses"
+  default_prompt: "Use $setup-swe-harness to safely install or upgrade the SWE Harness in this repository."

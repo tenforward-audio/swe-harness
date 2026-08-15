@@ -1,0 +1,4 @@
+interface:
+  display_name: "Develop Project"
+  short_description: "Implement and verify authorised project changes"
+  default_prompt: "Use $develop-project to implement and verify this authorised project change."

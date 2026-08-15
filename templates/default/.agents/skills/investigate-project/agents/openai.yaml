@@ -1,0 +1,4 @@
+interface:
+  display_name: "Investigate Project"
+  short_description: "Diagnose, research, plan, and review safely"
+  default_prompt: "Use $investigate-project to investigate this project question and report evidence without making changes."

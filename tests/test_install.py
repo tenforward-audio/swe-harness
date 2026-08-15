@@ -1,0 +1,154 @@
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest import TestCase
+from unittest.mock import patch
+
+from swe_harness.install import Status, apply_plan, plan_init, plan_upgrade
+from swe_harness.template import TemplateBundle, default_answers, default_template_root
+
+
+class InstallTest(TestCase):
+    def test_fresh_install_is_complete_and_idempotent(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            answers = default_answers(target)
+
+            first_plan = plan_init(bundle, target, answers)
+            self.assertFalse(first_plan.blockers)
+            apply_plan(first_plan)
+
+            second_plan = plan_init(bundle, target, answers)
+            self.assertFalse(second_plan.changes)
+            self.assertTrue(
+                all(entry.status == Status.UNCHANGED for entry in second_plan.entries)
+            )
+            self.assertTrue((target / ".agents/HARNESS.json").is_file())
+
+    def test_conflict_blocks_every_write(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            existing = target / "AGENTS.md"
+            existing.write_text("project-owned\n", encoding="utf-8")
+            bundle = TemplateBundle(default_template_root())
+
+            plan = plan_init(bundle, target, default_answers(target))
+
+            self.assertTrue(
+                any(entry.status == Status.CONFLICT for entry in plan.entries)
+            )
+            with self.assertRaisesRegex(ValueError, "change plan is blocked"):
+                apply_plan(plan)
+            self.assertEqual("project-owned\n", existing.read_text(encoding="utf-8"))
+            self.assertFalse((target / "CHANGELOG.md").exists())
+
+    def test_operational_failure_rolls_back_created_files(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            plan = plan_init(bundle, target, default_answers(target))
+            real_create = __import__(
+                "swe_harness.install", fromlist=["_create_file"]
+            )._create_file
+            calls = 0
+
+            def fail_after_first(destination: Path, content: bytes) -> None:
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    raise OSError("simulated write failure")
+                real_create(destination, content)
+
+            with patch("swe_harness.install._create_file", side_effect=fail_after_first):
+                with self.assertRaisesRegex(OSError, "simulated write failure"):
+                    apply_plan(plan)
+
+            self.assertFalse((target / ".agents/CONTRIBUTING.md").exists())
+
+    def test_upgrade_replaces_only_unchanged_installed_files(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            target = root / "target"
+            target.mkdir()
+            first_template = self._template(root / "one", "1.0.0", "first\n")
+            second_template = self._template(root / "two", "1.1.0", "second\n")
+            apply_plan(plan_init(first_template, target, {}))
+
+            plan = plan_upgrade(second_template, target, {})
+
+            self.assertFalse(plan.blockers)
+            self.assertEqual(
+                Status.UPDATE,
+                next(entry for entry in plan.entries if entry.relative == Path("AGENTS.md")).status,
+            )
+            apply_plan(plan)
+            self.assertEqual("second\n", (target / "AGENTS.md").read_text())
+
+    def test_upgrade_stops_for_project_owned_modification(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            target = root / "target"
+            target.mkdir()
+            first_template = self._template(root / "one", "1.0.0", "first\n")
+            second_template = self._template(root / "two", "1.1.0", "second\n")
+            apply_plan(plan_init(first_template, target, {}))
+            (target / "AGENTS.md").write_text("custom\n", encoding="utf-8")
+
+            plan = plan_upgrade(second_template, target, {})
+
+            entry = next(
+                entry for entry in plan.entries if entry.relative == Path("AGENTS.md")
+            )
+            self.assertEqual(Status.REVIEW, entry.status)
+            with self.assertRaisesRegex(ValueError, "change plan is blocked"):
+                apply_plan(plan)
+            self.assertEqual("custom\n", (target / "AGENTS.md").read_text())
+
+    def test_unchanged_upgrade_is_idempotent(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            answers = default_answers(target)
+            apply_plan(plan_init(bundle, target, answers))
+
+            plan = plan_upgrade(bundle, target, answers)
+
+            self.assertFalse(plan.blockers)
+            self.assertFalse(plan.changes)
+            self.assertTrue(
+                all(entry.status == Status.UNCHANGED for entry in plan.entries)
+            )
+
+    def test_upgrade_stops_when_file_changes_after_planning(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            target = root / "target"
+            target.mkdir()
+            first_template = self._template(root / "one", "1.0.0", "first\n")
+            second_template = self._template(root / "two", "1.1.0", "second\n")
+            apply_plan(plan_init(first_template, target, {}))
+            original_marker = (target / ".agents/HARNESS.md").read_text()
+            plan = plan_upgrade(second_template, target, {})
+            (target / "AGENTS.md").write_text("concurrent edit\n", encoding="utf-8")
+
+            with self.assertRaisesRegex(RuntimeError, "changed after planning"):
+                apply_plan(plan)
+
+            self.assertEqual(
+                "concurrent edit\n", (target / "AGENTS.md").read_text()
+            )
+            self.assertEqual(
+                original_marker,
+                (target / ".agents/HARNESS.md").read_text(),
+            )
+
+    @staticmethod
+    def _template(root: Path, revision: str, agents_content: str) -> TemplateBundle:
+        marker = root / ".agents/HARNESS.md"
+        marker.parent.mkdir(parents=True)
+        marker.write_text(
+            "# Harness state\n\n" f"- Template revision: `{revision}`\n",
+            encoding="utf-8",
+        )
+        (root / "AGENTS.md").write_text(agents_content, encoding="utf-8")
+        return TemplateBundle(root)

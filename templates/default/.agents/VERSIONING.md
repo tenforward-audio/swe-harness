@@ -1,7 +1,7 @@
 # Versioning and releases
 
-- Version source: `plugins/swe-harness/.codex-plugin/plugin.json`.
-- Release command: no automated release command is configured.
+- Version source: `{{VERSION_SOURCE}}`
+- Release command: `{{RELEASE_COMMAND}}`
 - Tag format: `vMAJOR.MINOR.PATCH`
 
 ## Version policy
@@ -21,9 +21,7 @@ migration work must follow a concrete supported constraint or decision, not
 repository history alone. If project instructions classify prototype state as
 disposable, rebuild or reset it instead.
 
-The manifest version describes the distributable plugin and CLI behavior. A
-version in `Unreleased` is not evidence that a tag, package, or marketplace
-release exists.
+Do not infer a version while `{{VERSION_SOURCE}}` remains unresolved.
 
 ## Changelog
 

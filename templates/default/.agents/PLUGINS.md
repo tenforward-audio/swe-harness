@@ -30,18 +30,8 @@ validation.
 
 ## Approved optional plugins
 
-### SWE Harness (`swe-harness`)
-
-- Status: approved optional distribution; not a dependency of this source repository
-- Workflow and purpose: initialise, upgrade, and validate the harness from Codex
-- Data authority: the selected target repository; the plugin carries reusable sources only
-- Allowed actions: read the selected repository, preview changes, and write only an unblocked explicit installation or upgrade plan
-- Required permissions: repository read/write access for the selected target
-- Fallback when unavailable: run `python3 -m swe_harness` from this checkout
-- Decision: [ADR 0002](decisions/0002-distribution-and-reconciliation.md)
-
-The plugin contains no MCP server or external-system connection. Marketplace
-installation and publication remain separate explicit actions.
+None declared. Built-in capabilities and currently available plugins may be used
+when a task calls for them, but that does not make them a project dependency.
 
 ## Declaration shape
 

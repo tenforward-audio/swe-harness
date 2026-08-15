@@ -3,22 +3,20 @@
 This directory is the detailed source of truth behind the automatically loaded
 root instructions. Each concern has one canonical owner; other files route to
 it instead of restating it. [Harness state](HARNESS.md) records reusable
-template parity.
+template parity; `HARNESS.json` contains non-authoritative installation
+checksums used only for safe reconciliation.
 
 ## Authority map
 
 | Concern | Canonical owner |
 | --- | --- |
-| Reusable generic harness content | [`../templates/default/`](../templates/default/) |
-| Install, upgrade, and validation behavior | [`../swe_harness/`](../swe_harness/) |
-| Optional Codex plugin surface | [`../plugins/swe-harness/`](../plugins/swe-harness/) |
 | Product contract, safety, and intent routing | [`AGENTS.md`](../AGENTS.md) |
 | Card schema and lifecycle | [`WORKFLOW.md`](WORKFLOW.md) |
 | Unselected work | [`ISSUES.md`](ISSUES.md) and [`FEATURES.md`](FEATURES.md) |
 | Selected work status | [`workboard/`](workboard/) |
 | Desired plugin capabilities | [`PLUGINS.md`](PLUGINS.md) |
 | Reusable template parity | [`HARNESS.md`](HARNESS.md) |
-| Durable technical rationale | [`decisions/`](decisions/), beginning with [repository authority](decisions/0001-repository-authority.md) and [distribution](decisions/0002-distribution-and-reconciliation.md) |
+| Durable technical rationale | [`decisions/`](decisions/) |
 | Delivered user-visible history | [`CHANGELOG.md`](../CHANGELOG.md) |
 
 ## Normal context
@@ -44,8 +42,3 @@ template parity.
 Repo-local skills under `skills/` separate intake capture, read-only
 investigation, work-state management, mutating development, and release work.
 Load the narrowest matching skill; intake queues are not routine context.
-
-Run `python3 scripts/check_harness.py` from the repository root after changing
-this structure. Run the tests after changing templates, reconciliation, or the
-plugin build. The validator enforces links and ownership invariants; it does not
-make product decisions.

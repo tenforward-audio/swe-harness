@@ -1,0 +1,24 @@
+{
+  "name": "swe-harness",
+  "version": "0.1.0",
+  "description": "Safely install, upgrade, and validate a repository-owned software-engineering harness.",
+  "author": {
+    "name": "SWE Harness Maintainers"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Swe Harness",
+    "shortDescription": "Set up repository-owned engineering workflows.",
+    "longDescription": "Install, reconcile, and validate project instructions, work cards, skills, policy, and release guidance without overwriting project-owned state.",
+    "developerName": "SWE Harness Maintainers",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Set up SWE Harness in this repository.",
+      "Check this repository's SWE Harness.",
+      "Safely upgrade this repository's SWE Harness."
+    ]
+  }
+}
