@@ -1,0 +1,4 @@
+interface:
+  display_name: "Capture Project Intake"
+  short_description: "Record tickets and feature requests only"
+  default_prompt: "Use $capture-project-intake to record this support ticket or feature request without starting work."
