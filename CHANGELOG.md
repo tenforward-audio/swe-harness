@@ -24,6 +24,8 @@ All notable changes to `SWE Harness` are recorded here.
 - Made this repository, rather than a personal skill directory, authoritative
   for reusable harness content and behavior.
 - Extended validation to installation metadata and built-plugin integration.
+- Standardised the first progress update for routed project and setup skills so
+  users can see which skill is active and what job it is performing.
 
 ### Deprecated
 

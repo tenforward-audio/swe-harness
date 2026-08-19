@@ -42,7 +42,14 @@ class PluginBuildTest(TestCase):
             )
             self.assertEqual("swe-harness", manifest["name"])
             self.assertTrue((plugin / "lib/swe_harness/cli.py").is_file())
-            self.assertTrue((plugin / "templates/default/AGENTS.md").is_file())
+            agents = (plugin / "templates/default/AGENTS.md").read_text(
+                encoding="utf-8"
+            )
+            setup_skill = (
+                plugin / "skills/setup-swe-harness/SKILL.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("Using skill: `<skill-name>`", agents)
+            self.assertIn("Using skill: `setup-swe-harness`", setup_skill)
 
     def test_build_refuses_to_replace_output(self) -> None:
         with TemporaryDirectory() as directory:

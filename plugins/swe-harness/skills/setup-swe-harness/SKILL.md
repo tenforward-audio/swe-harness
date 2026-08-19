@@ -5,6 +5,13 @@ description: Safely initialise, upgrade, or validate a repository-owned SWE Harn
 
 # Set Up SWE Harness
 
+Begin the first progress update with:
+
+```text
+Using skill: `setup-swe-harness`
+└─ <Brief description of the job being performed>
+```
+
 Use the bundled deterministic CLI as the only mutating boundary. Resolve the
 plugin root from this `SKILL.md`, then run:
 

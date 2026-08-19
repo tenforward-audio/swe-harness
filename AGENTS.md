@@ -90,6 +90,18 @@ missing project setup and ask only when the current task depends on it.
 
 Load only the skill and references relevant to the current task.
 
+### Skill use response
+
+When a routed project skill is selected, begin the first progress update with:
+
+```text
+Using skill: `<skill-name>`
+└─ <Brief description of the job being performed>
+```
+
+Use the exact skill name from its front matter and keep the description to one
+action-focused line. Omit this update when no project skill is selected.
+
 ## Work tracking
 
 - [The workflow contract](.agents/WORKFLOW.md) is the only source for card
