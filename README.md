@@ -1,82 +1,74 @@
 # SWE Harness
 
-SWE Harness gives Codex and project maintainers a repository-owned way to run
-software-engineering work. It keeps project rules, work cards, capability
-policy, durable decisions, and release guidance beside the code they govern.
+SWE Harness gives Codex and project maintainers a shared, repository-owned way
+to organise software work. Project rules, tickets, decisions, and engineering
+guidance stay beside the code instead of disappearing into chat history.
 
-The repository remains the source of truth. Local agent state and external
-trackers may help perform work, but they do not silently replace project policy
-or lifecycle state.
+## How to use it
 
-## What it adds to a project
+Once SWE Harness is installed, talk to Codex normally. Clear phrases at the
+start of a request help it choose the right workflow:
 
-- A root `AGENTS.md` that routes each kind of request to one focused skill.
-- Repository-local skills for intake, investigation, work management,
-  implementation, review, integration, parallel coordination, and releases.
-- Markdown intake queues and Planning, In progress, and Reviewing boards.
-- Engineering, dependency, security, plugin, versioning, and contribution
-  policy under `.agents/`.
-- ADRs for durable technical decisions and a changelog for delivered behaviour.
-- A deterministic standard-library Python CLI for safe installation, upgrade,
-  and validation.
-- Installation provenance in `.agents/HARNESS.json`, allowing generic template
-  updates to be reconciled without overwriting project-owned edits.
+| What you say | What happens |
+| --- | --- |
+| `Support ticket: checkout fails after applying a discount` | Records an issue without starting work on it |
+| `Feature request: add an order history page` | Records a feature idea without implementing it |
+| `Show me the open tickets` | Lists the current issue and feature queues |
+| `Promote ISSUE-001 to Planning` | Turns the selected ticket into a scoped work card |
+| `Start ISSUE-001` | Moves it into the single In progress slot |
+| `Implement ISSUE-001` | Makes the change and runs the project checks |
+| `Review commit abc123` | Reviews that candidate without changing it |
+| `Accept ISSUE-001` | Records the result and removes the completed card |
+| `Prepare a release` | Checks versioning and release readiness without publishing |
 
-## Work workflow
+Support tickets and feature requests are capture-only: Codex records them and
+stops. Ask it to promote or implement an item when you are ready to act on it.
 
-The location of a card is its status. Items move between canonical Markdown
-files; they are never copied into a second board or mirrored into a status
-field.
+## Workflow
+
+The file containing a card is its status, so there is never a second status
+field to keep in sync.
 
 ```mermaid
 flowchart LR
-    issue["ISSUES.md<br/>Issue intake"]
-    feature["FEATURES.md<br/>Feature intake"]
-    planning["PLANNING.md<br/>Prioritised and scoped"]
-    progress["IN_PROGRESS.md<br/>One WIP slot"]
-    review["REVIEWING.md<br/>Evidence and acceptance"]
-    outcome["Durable outcome<br/>Git history · changelog · docs · ADR"]
+    issue["Support ticket<br/>ISSUES.md"]
+    feature["Feature request<br/>FEATURES.md"]
+    planning["Planning<br/>scoped and prioritised"]
+    progress["In progress<br/>one WIP slot"]
+    review["Reviewing<br/>evidence and acceptance"]
+    outcome["Durable result<br/>Git · changelog · docs · ADR"]
 
     issue -->|promote| planning
     feature -->|promote| planning
     planning -->|start| progress
-    progress -->|implementation and checks complete| review
+    progress -->|checks complete| review
     review -->|accept| outcome
     review -->|changes needed| planning
     issue -->|close| outcome
     feature -->|reject| outcome
 ```
 
-There is no completed board. Accepted results live in Git history and, where
-appropriate, the changelog, documentation, or an ADR. Small, explicitly
-authorised changes can be completed without a card; durable tracking is used
-when work must survive the current task, compete for priority, coordinate
-parallel lanes, or await later acceptance.
+There is no completed board. Accepted results live in Git history and, when
+useful, the changelog, documentation, or an architectural decision record.
+Small, explicitly authorised changes can be completed without creating a card.
 
-[`.agents/WORKFLOW.md`](.agents/WORKFLOW.md) is the canonical contract for card
-fields and transitions.
+The full lifecycle is defined in [`.agents/WORKFLOW.md`](.agents/WORKFLOW.md).
 
-## Intent-specific skills
+## What it adds
 
-Each operation has one owner so that answering a question cannot silently turn
-into implementation, and implementation authority cannot silently turn into a
-merge, push, or release.
+- A root [`AGENTS.md`](AGENTS.md) that routes each request to one focused skill.
+- Repository-local skills for intake, investigation, implementation, review,
+  integration, parallel work, and releases.
+- Markdown queues and Planning, In progress, and Reviewing boards.
+- Engineering, dependency, security, plugin, versioning, and contribution
+  policy under [`.agents/`](.agents/).
+- A standard-library Python CLI for safe installation, upgrade, and validation.
+- A checksum manifest that protects project-owned edits during upgrades.
 
-| Intent | Owning skill |
-| --- | --- |
-| Capture an explicit issue, bug, task, or feature request | [`capture-project-intake`](.agents/skills/capture-project-intake/SKILL.md) |
-| Investigate, explain, compare, audit, or plan | [`investigate-project`](.agents/skills/investigate-project/SKILL.md) |
-| List or transition recorded work | [`manage-project-work`](.agents/skills/manage-project-work/SKILL.md) |
-| Coordinate explicitly requested parallel lanes | [`coordinate-parallel-work`](.agents/skills/coordinate-parallel-work/SKILL.md) |
-| Implement, fix, refactor, test, or change dependencies | [`develop-project`](.agents/skills/develop-project/SKILL.md) |
-| Review a defined candidate change | [`review-project-change`](.agents/skills/review-project-change/SKILL.md) |
-| Integrate an accepted and reviewed candidate | [`integrate-reviewed-change`](.agents/skills/integrate-reviewed-change/SKILL.md) |
-| Prepare versions, release notes, tags, or publication | [`release-project`](.agents/skills/release-project/SKILL.md) |
+Repository files remain canonical. Local agent state and external trackers may
+help perform work, but they do not silently replace project policy or cards.
 
-The root [`AGENTS.md`](AGENTS.md) owns the routing and safety boundaries. Each
-skill owns only the procedure for its intent.
-
-## Install into a project
+## Install and maintain
 
 Run the interactive initialiser from this checkout:
 
@@ -84,87 +76,57 @@ Run the interactive initialiser from this checkout:
 python3 -m swe_harness init /path/to/project
 ```
 
-It asks for missing project facts, refuses to overwrite different existing
-content, and records checksums for the files it installs. For an automated
-setup, preview conservative defaults before applying them:
+For automated setup, preview before applying:
 
 ```sh
 python3 -m swe_harness init /path/to/project --defaults --non-interactive --require-complete --dry-run
 python3 -m swe_harness init /path/to/project --defaults --non-interactive --require-complete
 ```
 
-Validate an installed harness:
+Validate or safely upgrade an installed harness:
 
 ```sh
 python3 -m swe_harness validate /path/to/project --require-manifest
-```
-
-## Upgrade safely
-
-An upgrade is a dry run unless `--apply` is present:
-
-```sh
 python3 -m swe_harness upgrade /path/to/project --defaults --non-interactive --require-complete
 python3 -m swe_harness upgrade /path/to/project --defaults --non-interactive --require-complete --apply
 ```
 
-The reconciler automatically replaces only files that still match their
-recorded installation checksum. Project-edited files are marked `REVIEW`,
-conflicts block application, and retired template files are never deleted.
+Upgrade is a dry run unless `--apply` is present. Unchanged generic files can be
+updated automatically; project-edited files are marked `REVIEW`, conflicts
+block application, and retired files are never deleted.
 
 ## Optional Codex plugin
 
-The optional plugin provides the `setup-swe-harness` skill as a thin interface
-over the same CLI and canonical template. It does not add an MCP server,
-external tracker, custom UI, or second template copy.
-
-Build a self-contained plugin directory:
+The optional `setup-swe-harness` skill is a thin interface over the same CLI and
+template. Build the self-contained plugin with:
 
 ```sh
 python3 scripts/build_plugin.py
 ```
 
-The generated `dist/swe-harness/` directory is intentionally untracked. The
-source checkout and built plugin expose the same `init`, `upgrade`, and
-`validate` commands.
+The generated `dist/swe-harness/` directory is intentionally untracked.
 
-## Repository map
-
-Each concern has one canonical owner. [ADR 0001](.agents/decisions/0001-repository-authority.md)
-records why authority stays in the repository, and
-[ADR 0002](.agents/decisions/0002-distribution-and-reconciliation.md) records
-the distribution and reconciliation model.
+## Maintainer map
 
 | Concern | Canonical source |
 | --- | --- |
 | Reusable generic harness | [`templates/default/`](templates/default/) |
-| Rendering, reconciliation, and validation | [`swe_harness/`](swe_harness/) |
+| Installation, reconciliation, and validation | [`swe_harness/`](swe_harness/) |
 | Optional Codex plugin | [`plugins/swe-harness/`](plugins/swe-harness/) |
 | Product contract and intent routing | [`AGENTS.md`](AGENTS.md) |
-| Harness navigation and policy | [`.agents/`](.agents/) |
-| Intake queues | [`.agents/ISSUES.md`](.agents/ISSUES.md) and [`.agents/FEATURES.md`](.agents/FEATURES.md) |
-| Selected work | [`.agents/workboard/`](.agents/workboard/) |
-| Durable decisions | [`.agents/decisions/`](.agents/decisions/) |
-| Delivered changes | [`CHANGELOG.md`](CHANGELOG.md) |
+| Policy, cards, and decisions | [`.agents/`](.agents/) |
 
-Rendered target repositories own their project-specific choices. The checksum
-manifest is provenance for safe reconciliation, not a claim that generated
-files outrank project edits.
+[ADR 0001](.agents/decisions/0001-repository-authority.md) explains repository
+authority. [ADR 0002](.agents/decisions/0002-distribution-and-reconciliation.md)
+explains distribution and safe reconciliation.
 
 ## Develop and validate
-
-SWE Harness uses only Python's standard library. Run the full project gate with:
 
 ```sh
 python3 -m unittest discover -s tests
 python3 scripts/check_harness.py
 python3 -m compileall -q swe_harness scripts plugins/swe-harness/scripts
 ```
-
-The test suite includes a clean, self-contained plugin build and install. The
-validator checks canonical sources, internal links, unresolved project setup,
-tracked-identifier uniqueness, the WIP limit, skill-name uniqueness, and
-installation metadata integrity.
 
 ## Licence
 

@@ -35,8 +35,8 @@ All notable changes to `SWE Harness` are recorded here.
 - Made open-ticket and review-queue listing an explicit read-only behavior of
   `manage-project-work`, and narrowed review, coordination, and integration to
   one routed owner each.
-- Reworked the README around the current repository-owned workflow, intent
-  routing, safe reconciliation model, and optional plugin surface.
+- Simplified the README around plain-language usage, the current workflow, safe
+  reconciliation, and the optional plugin surface.
 
 ### Deprecated
 
