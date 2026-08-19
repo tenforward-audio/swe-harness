@@ -31,6 +31,7 @@ class InstallTest(TestCase):
             apply_plan(plan_init(bundle, target, default_answers(target)))
 
             expected_skills = (
+                "clean-up-worktree",
                 "coordinate-parallel-work",
                 "deliver-project-work",
                 "integrate-reviewed-change",
@@ -54,6 +55,17 @@ class InstallTest(TestCase):
             ).read_text(encoding="utf-8")
             self.assertIn("Ask for explicit confirmation", deliver)
             self.assertIn("Finish at Reviewing", deliver)
+
+            cleanup = (
+                target / ".agents/skills/clean-up-worktree/SKILL.md"
+            ).read_text(encoding="utf-8")
+            integration = (
+                target / ".agents/skills/integrate-reviewed-change/SKILL.md"
+            ).read_text(encoding="utf-8")
+            research = (target / ".agents/RESEARCH.md").read_text(encoding="utf-8")
+            self.assertIn("remote branch deletion", cleanup)
+            self.assertIn("clean-up-worktree", integration)
+            self.assertIn("knowledge archive", research)
 
     def test_fresh_install_is_complete_and_idempotent(self) -> None:
         with TemporaryDirectory() as directory:

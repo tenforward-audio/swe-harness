@@ -85,7 +85,7 @@ missing project setup and ask only when the current task depends on it.
   current state through confirmation, checks, and Reviewing:
   [deliver project work](.agents/skills/deliver-project-work/SKILL.md).
 - List open tickets or review items, summarise status, make a planning-only
-  transition, record acceptance, return, or close recorded work:
+  transition, record acceptance, return, abandon, or close recorded work:
   [manage project work](.agents/skills/manage-project-work/SKILL.md).
 - Coordinate explicitly requested parallel agents, lanes, or worktrees:
   [coordinate parallel work](.agents/skills/coordinate-parallel-work/SKILL.md).
@@ -96,6 +96,9 @@ missing project setup and ask only when the current task depends on it.
   [review a project change](.agents/skills/review-project-change/SKILL.md).
 - Integrate or merge an already reviewed candidate after explicit approval:
   [integrate a reviewed change](.agents/skills/integrate-reviewed-change/SKILL.md).
+- Remove an explicitly named local worktree and branch after completed
+  integration, handoff, or deliberate abandonment:
+  [clean up a worktree](.agents/skills/clean-up-worktree/SKILL.md).
 - Prepare versions, release notes, tags, or publication:
   [release the project](.agents/skills/release-project/SKILL.md).
 
@@ -122,6 +125,8 @@ action-focused line. Omit this update when no project skill is selected.
   fields and lifecycle transitions.
 - Intake queues and status boards own live state. Load only the relevant source
   unless the user requests an overview or migration.
+- [The research archive](.agents/RESEARCH.md) retains material findings from
+  abandoned planning or research; it never owns live status.
 
 ## Plugin capabilities
 

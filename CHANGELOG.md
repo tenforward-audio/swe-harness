@@ -22,6 +22,9 @@ All notable changes to `SWE Harness` are recorded here.
   review, and explicitly authorised integration of reviewed changes.
 - Confirmed end-to-end delivery for a selected recorded item, covering its
   lifecycle moves, implementation, checks, and handoff to Reviewing.
+- Consent-based cleanup for integrated, handed-off, or deliberately abandoned
+  local worktrees and branches, with preservation checks and a durable research
+  findings archive.
 - MIT licensing for open-source use, modification, and redistribution.
 
 ### Changed
@@ -40,6 +43,9 @@ All notable changes to `SWE Harness` are recorded here.
 - Simplified the README around one plain-language work command, parallel
   worktrees, the current workflow, safe reconciliation, and the optional plugin
   surface.
+- Made verified integration and completed research handoffs offer exact local
+  cleanup while keeping lifecycle changes, remote deletion, and evidence
+  removal separately authorised.
 
 ### Deprecated
 

@@ -33,3 +33,14 @@ description: Answer, explain, diagnose, research, compare, plan, or audit this p
 - If the request explicitly includes implementation, hand the evidence to
   `develop-project` for the authorised change. Explicitly framed support
   tickets and feature requests remain capture-only.
+
+## Offer deliberate abandonment without inferring it
+
+- If the user decides that an isolated planning or research idea is not worth
+  pursuing, summarise the findings, uncertainty, and any material local work.
+- Name the retained worktree and branch and offer to preserve useful findings
+  and clean up those exact local targets through
+  [`clean-up-worktree`](../clean-up-worktree/SKILL.md). Research completion or a
+  negative recommendation alone is not abandonment or cleanup authority.
+- Keep the investigation read-only until the user unambiguously agrees to the
+  named findings record, any lifecycle effect, and the local cleanup.

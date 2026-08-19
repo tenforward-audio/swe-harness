@@ -13,6 +13,9 @@ contain live state only and must not redefine this contract.
 - Intake order is not priority. Planning order expresses the chosen sequence.
 - Keep no completed board. Accepted outcomes belong in Git history, the
   changelog, documentation, or an ADR.
+- `RESEARCH.md` owns only material planning or research findings retained after
+  abandonment. It does not own live work state and must not duplicate an active
+  card, current documentation, or an ADR.
 - External trackers and plugins may display or transport work, but these files
   remain canonical unless an ADR explicitly changes that boundary.
 
@@ -22,7 +25,7 @@ contain live state only and must not redefine this contract.
 | --- | --- | --- | --- |
 | Issue intake | [`ISSUES.md`](ISSUES.md) | Explicit ticket, bug, task, maintenance, or security report | User deliberately promotes or closes it |
 | Feature intake | [`FEATURES.md`](FEATURES.md) | Explicit product idea | User deliberately promotes or rejects it |
-| Planning | [`workboard/PLANNING.md`](workboard/PLANNING.md) | Promoted item has an outcome and observable exit checks | User explicitly starts the card |
+| Planning | [`workboard/PLANNING.md`](workboard/PLANNING.md) | Promoted item has an outcome and observable exit checks | User explicitly starts or abandons the card |
 | In progress | [`workboard/IN_PROGRESS.md`](workboard/IN_PROGRESS.md) | The WIP slot is free and ownership is clear | Implementation and required checks are complete |
 | Reviewing | [`workboard/REVIEWING.md`](workboard/REVIEWING.md) | Evidence and any manual acceptance steps are recorded | User accepts it, requests changes, or rejects it |
 
@@ -130,3 +133,20 @@ tracker.
 - Cards needing material work move back to Planning with one clear next action.
 - Rejected work is removed only on explicit user direction, with durable
   rationale recorded when it affects future decisions.
+
+### Abandon planning or research
+
+- Require the user to identify the idea being abandoned and any affected card,
+  worktree, or branch. A negative finding or stalled investigation is not by
+  itself an abandonment decision.
+- Before removing a live card, preserve material findings in the narrowest
+  durable owner: current project documentation, an ADR for a consequential
+  decision, or [`RESEARCH.md`](RESEARCH.md) for useful exploratory or negative
+  results. Do not create a research entry when nothing is worth retaining.
+- Remove or reject a live card only when that lifecycle effect was explicitly
+  authorised. Record why the work stopped when the rationale could affect a
+  future decision.
+- Worktree and branch removal is a separate destructive effect owned by
+  [`clean-up-worktree`](skills/clean-up-worktree/SKILL.md). One user agreement
+  may authorise both abandonment and cleanup only when the exact lifecycle and
+  local deletion effects were stated together.

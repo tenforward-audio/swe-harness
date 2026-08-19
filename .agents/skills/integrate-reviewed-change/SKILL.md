@@ -50,6 +50,13 @@ operation.
   preservation, and unrelated changes.
 - Report the integrated candidate and resulting commit, checks, conflicts or
   deviations, and observed versus unobserved evidence.
+- After successful verification, if the user has accepted or otherwise
+  explicitly declared the candidate complete, name the retained local candidate
+  worktree and branch and offer to remove them. State that cleanup is optional,
+  requires a separate unambiguous agreement, and will not delete a remote branch
+  or durable review evidence. If the user agrees, use
+  [`clean-up-worktree`](../clean-up-worktree/SKILL.md). If tracked acceptance is
+  still pending, retain the artifacts without offering cleanup yet.
 - Do not infer acceptance or card closure from integration. Use
   [`manage-project-work`](../manage-project-work/SKILL.md) only when the user
   explicitly requests the corresponding lifecycle transition.

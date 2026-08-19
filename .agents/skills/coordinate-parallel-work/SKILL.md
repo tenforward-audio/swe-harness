@@ -56,4 +56,8 @@ history rewriting, push, publication, or other remote actions.
 
 Coordination completes with a lane inventory and evidence handoff. Use
 [`integrate-reviewed-change`](../integrate-reviewed-change/SKILL.md) only after
-the user explicitly approves integration.
+the user explicitly approves integration. Once a lane's integration or handoff
+is complete and the user has accepted or explicitly declared the lane complete,
+name its retained local worktree and branch and offer optional cleanup through
+[`clean-up-worktree`](../clean-up-worktree/SKILL.md). Do not infer cleanup
+authority from coordination, review, acceptance, or handoff authority.

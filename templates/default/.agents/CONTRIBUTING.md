@@ -31,6 +31,11 @@ Do not bypass failed checks, hooks, signing, or author identity. Report the
 blocker instead. Never amend or rewrite history, rebase, merge, switch branches,
 or alter remotes without an explicit request.
 
+Local branch and worktree cleanup follows
+[`clean-up-worktree`](skills/clean-up-worktree/SKILL.md) after explicit authority
+for the exact targets and preservation checks. Remove the worktree before its
+local branch. Local cleanup authority never includes a remote branch.
+
 Dependency changes must follow [the dependency policy](DEPENDENCIES.md).
 Durable architectural choices require an ADR; ordinary implementation details
 do not.

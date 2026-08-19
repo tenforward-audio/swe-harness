@@ -1,6 +1,6 @@
 ---
 name: manage-project-work
-description: List open tickets or review items, summarise status, apply planning-only lifecycle transitions, record acceptance, return, or close already-recorded work in this project's Markdown queues and boards. Use for filtered work lists, explicit status-only changes, and manual acceptance evidence. Do not use for initial intake, end-to-end delivery, parallel-lane orchestration, technical review, implementation, integration, or releases.
+description: List open tickets or review items, summarise status, apply planning-only lifecycle transitions, record acceptance, return, abandon, or close already-recorded work in this project's Markdown queues and boards. Use for filtered work lists, explicit status-only changes, and manual acceptance evidence. Do not use for initial intake, end-to-end delivery, parallel-lane orchestration, technical review, implementation, integration, local cleanup, or releases.
 ---
 
 # Manage Project Work
@@ -58,6 +58,9 @@ skill owns the procedure for applying them.
   or an ADR as appropriate, then remove the card only when the user accepts it.
   Return it to Planning if material work remains. Close or reject intake only
   when asked.
+- Abandon selected planning or research only when the user asks. Follow the
+  workflow's preservation rules before removing a card, and do not infer local
+  worktree or branch cleanup from that lifecycle decision.
 
 ## Keep lifecycle ownership narrow
 
@@ -70,6 +73,9 @@ skill owns the procedure for applying them.
   technical assessment and returns evidence without changing lifecycle state.
 - [`integrate-reviewed-change`](../integrate-reviewed-change/SKILL.md) owns an
   explicitly authorised integration without inferring acceptance or closure.
+- [`clean-up-worktree`](../clean-up-worktree/SKILL.md) owns explicitly
+  authorised local worktree and branch removal after preservation checks.
+  Acceptance, rejection, closure, or return does not imply cleanup authority.
 - Keep status boards canonical in the coordinating checkout. Background lanes
   return commits and evidence but never independently promote cards, rewrite
   queues, or reconcile global state.
