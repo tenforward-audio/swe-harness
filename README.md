@@ -26,7 +26,7 @@ python3 -m swe_harness init /path/to/project --defaults --non-interactive --requ
 Validate or safely reconcile an installed project:
 
 ```sh
-python3 -m swe_harness doctor /path/to/project --require-manifest
+python3 -m swe_harness validate /path/to/project --require-manifest
 python3 -m swe_harness upgrade /path/to/project --defaults --non-interactive --require-complete
 python3 -m swe_harness upgrade /path/to/project --defaults --non-interactive --require-complete --apply
 ```
@@ -93,7 +93,7 @@ python3 scripts/build_plugin.py
 
 The generated `dist/swe-harness/` directory is intentionally untracked. Install
 or publish it only as a separate, explicit action. The source checkout and the
-built plugin expose the same `init`, `upgrade`, and `doctor` commands.
+built plugin expose the same `init`, `upgrade`, and `validate` commands.
 
 ## Develop and validate
 

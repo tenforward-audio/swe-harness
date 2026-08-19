@@ -2,12 +2,12 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import TestCase
 
-from swe_harness.doctor import inspect_harness
 from swe_harness.install import apply_plan, plan_init
 from swe_harness.template import TemplateBundle, default_answers, default_template_root
+from swe_harness.validation import inspect_harness
 
 
-class DoctorTest(TestCase):
+class ValidationTest(TestCase):
     def test_installed_harness_passes(self) -> None:
         with TemporaryDirectory() as directory:
             target = Path(directory)

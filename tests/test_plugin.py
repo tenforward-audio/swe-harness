@@ -32,7 +32,7 @@ class PluginBuildTest(TestCase):
             )
             self._run(
                 plugin / "scripts/swe-harness.py",
-                "doctor",
+                "validate",
                 target,
                 "--require-manifest",
             )

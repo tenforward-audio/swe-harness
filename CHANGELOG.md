@@ -15,7 +15,7 @@ All notable changes to `SWE Harness` are recorded here.
   identifiers, WIP limits, and skill names.
 - Canonical generic harness under `templates/default/`.
 - Interactive and automatable `init`, dry-run-first `upgrade`, and read-only
-  `doctor` commands.
+  `validate` commands.
 - Optional skills-only Codex plugin assembled from canonical repository sources.
 - Installation provenance with validated paths and checksums for safe upgrades.
 - Project-agnostic skills for parallel-lane coordination, read-only candidate

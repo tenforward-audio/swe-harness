@@ -23,7 +23,7 @@ python3 PLUGIN_ROOT/scripts/swe-harness.py COMMAND
 
 - Use `init` when `.agents/HARNESS.json` is absent.
 - Use `upgrade` when that manifest is present and the user requests an upgrade.
-- Use `doctor` for read-only validation.
+- Use `validate` for read-only validation.
 
 Resolve the target repository from an explicit user path, then its Git root,
 then the current working directory. Never target a home directory, filesystem
@@ -36,7 +36,7 @@ root, or another broad directory.
 3. Preview with `init TARGET --dry-run --non-interactive --require-complete`.
 4. If the preview reports conflicts, inspect them and stop. Do not overwrite.
 5. Repeat the identical command without `--dry-run` only when the plan is safe.
-6. Run `doctor TARGET --require-manifest`.
+6. Run `validate TARGET --require-manifest`.
 
 Do not infer a project's stack, commands, licence, release target, supported
 versions, or security contact.
@@ -46,13 +46,13 @@ versions, or security contact.
 1. Run `upgrade TARGET` first; upgrade is a dry run by default.
 2. Treat every `REVIEW` result as a project-owned merge requiring approval.
 3. Add `--apply` only when every proposed update is unambiguous.
-4. Run `doctor TARGET --require-manifest` after applying.
+4. Run `validate TARGET --require-manifest` after applying.
 
 Never delete retired files during an upgrade.
 
 ## Validate only
 
-Run `doctor TARGET`. Treat `NOTE` messages as information and `ERROR` messages
+Run `validate TARGET`. Treat `NOTE` messages as information and `ERROR` messages
 as blockers.
 
 Do not install marketplace entries, push commits, tag versions, publish

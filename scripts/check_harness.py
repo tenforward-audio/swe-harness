@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compatibility wrapper for the SWE Harness doctor command."""
+"""Compatibility wrapper for the SWE Harness validate command."""
 
 import argparse
 import sys
@@ -19,7 +19,7 @@ def compatibility_main(arguments: list[str] | None = None) -> int:
         help="repository root (defaults to the parent of this script directory)",
     )
     args = parser.parse_args(arguments)
-    return main(["doctor", str(args.root)])
+    return main(["validate", str(args.root)])
 
 
 if __name__ == "__main__":

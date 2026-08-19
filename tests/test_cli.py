@@ -11,21 +11,21 @@ from swe_harness.template import default_answers
 
 
 class CliTest(TestCase):
-    def test_init_and_doctor_commands(self) -> None:
+    def test_init_and_validate_commands(self) -> None:
         with TemporaryDirectory() as directory:
             target = Path(directory)
 
             init_code, init_output = self._run(
                 ["init", str(target), "--defaults", "--require-complete"]
             )
-            doctor_code, doctor_output = self._run(
-                ["doctor", str(target), "--require-manifest"]
+            validate_code, validate_output = self._run(
+                ["validate", str(target), "--require-manifest"]
             )
 
             self.assertEqual(0, init_code, init_output)
             self.assertIn("APPLIED", init_output)
-            self.assertEqual(0, doctor_code, doctor_output)
-            self.assertIn("Harness check passed", doctor_output)
+            self.assertEqual(0, validate_code, validate_output)
+            self.assertIn("Harness check passed", validate_output)
 
     def test_interactive_prompt_fills_only_missing_answer(self) -> None:
         with TemporaryDirectory() as directory:

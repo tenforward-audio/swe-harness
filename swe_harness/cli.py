@@ -7,7 +7,6 @@ import sys
 from pathlib import Path
 from typing import Sequence
 
-from .doctor import inspect_harness
 from .install import ChangePlan, apply_plan, plan_init, plan_upgrade
 from .template import (
     TemplateBundle,
@@ -18,6 +17,7 @@ from .template import (
     read_answers,
     unresolved_active_placeholders,
 )
+from .validation import inspect_harness
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -45,9 +45,11 @@ def _parser() -> argparse.ArgumentParser:
         help="apply safe changes; the default is a dry run",
     )
 
-    doctor_parser = subparsers.add_parser("doctor", help="validate an installed harness")
-    _add_target(doctor_parser)
-    doctor_parser.add_argument(
+    validate_parser = subparsers.add_parser(
+        "validate", help="validate an installed harness"
+    )
+    _add_target(validate_parser)
+    validate_parser.add_argument(
         "--require-manifest",
         action="store_true",
         help="treat missing installation metadata as an error",
@@ -159,7 +161,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             return _run_change(args, "init")
         if args.command == "upgrade":
             return _run_change(args, "upgrade")
-        if args.command == "doctor":
+        if args.command == "validate":
             bundle = _bundle(args.template)
             findings = inspect_harness(args.path, bundle, args.require_manifest)
             for finding in findings:
