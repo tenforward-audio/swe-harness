@@ -13,9 +13,10 @@ start of a request help it choose the right workflow:
 | --- | --- |
 | `Support ticket: checkout fails after applying a discount` | Records an issue without starting work on it |
 | `Feature request: add an order history page` | Records a feature idea without implementing it |
-| `Show me the open tickets` | Lists the current issue and feature queues |
+| `Show me the open tickets` | Lists open issues across intake and the live boards |
+| `Show me the open work` | Lists open issues and feature ideas across all live states |
 | `Work on ISSUE-001` | Shows one plan for confirmation, then starts the item, implements it, runs checks, and moves passing work to Reviewing |
-| `Work on FEATURE-001 and FEATURE-002 in parallel` | Confirms how the work fits under one parent, then gives each code-changing lane its own Git worktree and branch |
+| `Work on FEATURE-001 with API and UI lanes in parallel` | Confirms one parent outcome, then gives each code-changing lane its own Git worktree and branch |
 | `Review commit abc123` | Reviews that candidate without changing it |
 | `Accept ISSUE-001` | Records the result and removes the completed card |
 | `Prepare a release` | Checks versioning and release readiness without publishing |
@@ -32,12 +33,12 @@ You can still request a status-only action such as `Promote ISSUE-001 to
 Planning`, but most users should not need to manage those steps themselves.
 
 The In progress board still contains one parent card during parallel work. If
-you explicitly ask to work on several compatible features at once, Codex first
-confirms how they will be coordinated under that parent. It records separate
-lanes and creates a separate Git worktree for each lane that changes files,
-with each worktree checked out on its own branch. If the items are independent,
-Codex asks which one to start instead of silently combining them. Integration
-remains a separate, explicitly approved step.
+you explicitly ask for compatible implementation lanes within that selected
+item, Codex records the lanes and creates a separate Git worktree for each lane
+that changes files, with each worktree checked out on its own branch. If you
+name several tracked issues or features, Codex asks which identifier should be
+the parent and leaves the others where they are instead of silently combining
+cards. Integration remains a separate, explicitly approved step.
 
 ## Workflow
 

@@ -34,6 +34,8 @@ operation.
 - Audit root instructions and `.agents/` independently. Reject stale queue,
   board, policy, or evidence copies from a background lane. Apply legitimate
   reviewed canonical-state changes only in the designated coordinating checkout.
+  Preserve lifecycle-tracking checkpoints already made on the canonical target;
+  they are not required to appear on the pinned candidate branch.
 - Use the explicitly selected non-history-rewriting integration method. Preserve
   authorship and commit identity where the method allows it.
 - Do not improvise substantive conflict resolutions. A conflict that changes

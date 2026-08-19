@@ -31,6 +31,11 @@ Do not bypass failed checks, hooks, signing, or author identity. Report the
 blocker instead. Never amend or rewrite history, rebase, merge, switch branches,
 or alter remotes without an explicit request.
 
+For recorded work, checkpoint lifecycle transitions on the canonical
+coordinating branch and implementation on its candidate branch. Leave the
+candidate branch pinned to the exact commit handed to review; do not advance it
+with the Reviewing-card checkpoint.
+
 Local branch and worktree cleanup follows
 [`clean-up-worktree`](skills/clean-up-worktree/SKILL.md) after explicit authority
 for the exact targets and preservation checks. Remove the worktree before its

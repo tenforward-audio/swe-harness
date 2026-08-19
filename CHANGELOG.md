@@ -54,6 +54,14 @@ All notable changes to `SWE Harness` are recorded here.
 ### Fixed
 
 - Corrected the MIT copyright holder to Ten Forward Ltd.
+- Kept lifecycle tracking checkpoints off pinned implementation branches so
+  candidate review and integration use one stable commit identity.
+- Defined parallel lanes as parts of one selected card instead of silently
+  combining multiple tracked identifiers under the single WIP slot.
+- Allowed explicitly authorised local branch removal after a completed handoff
+  when an independent durable reference preserves the exact candidate.
+- Aligned the README's open-ticket and open-work examples with the canonical
+  queue terminology.
 
 ### Security
 

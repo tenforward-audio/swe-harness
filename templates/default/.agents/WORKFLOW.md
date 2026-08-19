@@ -38,18 +38,27 @@ recorded item for the confirmed end-to-end path owned by
 
 1. Resolve the item and present its outcome, scope, checks, and branch or
    worktree plan for confirmation.
-2. After confirmation, satisfy the Planning and In progress entry rules and
-   begin implementation on the approved branch.
+2. After confirmation, satisfy the Planning and In progress entry rules on the
+   canonical coordinating branch and checkpoint that state before creating the
+   implementation branch.
 3. Keep failed or incomplete work In progress with evidence and one next
    action.
-4. Move a passing candidate to Reviewing with its commit and verification
-   evidence.
+4. Checkpoint passing implementation on its candidate branch and leave that
+   branch pinned to the exact candidate commit.
+5. Move the card to Reviewing in a separate checkpoint on the canonical
+   coordinating branch, recording the candidate commit and verification
+   evidence without advancing the candidate branch.
 
 An explicit request to "promote to Planning" or "start without implementing"
 remains a lifecycle-only transition. Acceptance remains a separate user action.
 If the WIP slot is occupied, ask whether to leave the item in Planning, finish
 the current parent first, or explicitly coordinate compatible parallel lanes;
 never create a second parent or combine independent cards silently.
+
+Parallel lanes decompose one selected parent outcome. They do not combine
+multiple tracked identifiers under one WIP slot. If a request names several
+identifiers, ask the user to choose one parent and leave every other item in its
+current lifecycle location unless a separate explicit transition is requested.
 
 A bounded, explicitly authorised change can be completed without durable card
 state. Capture it first when it must survive the current task, compete for
@@ -103,9 +112,9 @@ with this card. Omit only fields explicitly marked optional.
 ```
 
 An In progress card may add `Lanes` for parallel ownership. A Reviewing card
-must add `Evidence` with automated results and manual steps labelled `Observed`
-or `Not observed`. Do not encode the same facts in a second card or external
-tracker.
+must add `Evidence` with the exact pinned candidate commit, automated results,
+and manual steps labelled `Observed` or `Not observed`. Do not encode the same
+facts in a second card or external tracker.
 
 ## Transition checks
 
@@ -125,7 +134,10 @@ tracker.
 
 - Behavior, tests, documentation, and configured gates are complete.
 - Evidence names what was observed and what remains unobserved.
-- The card is removed from In progress in the same coherent checkpoint.
+- The candidate branch points to the exact implementation commit recorded in
+  Evidence and contains no later lifecycle-tracking commit.
+- The card is removed from In progress in one coherent tracking checkpoint on
+  the canonical coordinating branch, separate from the candidate commit.
 
 ### Accept, reject, or return
 

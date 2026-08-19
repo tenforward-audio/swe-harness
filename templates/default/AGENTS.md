@@ -64,6 +64,8 @@ missing project setup and ask only when the current task depends on it.
 - A branch is the durable review identity; create one before checkpoint or
   review, never check it out in multiple worktrees, and never reuse it for a
   different change.
+- Keep lifecycle-tracking checkpoints on the canonical coordinating branch so
+  they never advance a pinned implementation candidate.
 - The coordinating checkout owns intake and canonical status. Parallel authority
   does not imply merge, deletion, push, history-rewrite, or remote authority.
 

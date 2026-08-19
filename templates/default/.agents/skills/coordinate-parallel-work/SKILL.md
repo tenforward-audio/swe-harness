@@ -15,6 +15,9 @@ description: Coordinate explicitly requested parallel engineering work across ag
 3. Require one selected parent card in progress before dispatch. If none exists,
    use [`manage-project-work`](../manage-project-work/SKILL.md) to establish the
    user-selected outcome; do not invent or silently promote an intake item.
+   Do not turn another tracked identifier into a lane under that parent; leave
+   it in its current lifecycle location unless the user separately transitions
+   it.
 4. Resolve the coordinating checkout, canonical ref, exact common-base commit,
    current worktrees, and unrelated working-tree changes before creating lanes.
 
@@ -37,7 +40,8 @@ history rewriting, push, publication, or other remote actions.
   and worktree state on the parent card without machine-specific absolute paths.
 - Direct each mutating lane to follow
   [`develop-project`](../develop-project/SKILL.md). Background lanes return
-  commits and evidence; they do not change canonical queues or boards.
+  commits and evidence, leave their branches pinned to those commits, and do
+  not change canonical queues or boards.
 
 ## Reconcile evidence without integrating
 

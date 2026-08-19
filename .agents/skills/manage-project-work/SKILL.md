@@ -50,10 +50,12 @@ skill owns the procedure for applying them.
 - Start only an explicitly selected card. Keep at most one parent card in
   `IN_PROGRESS.md` unless the user changes the work-in-progress policy.
 - Move a completed candidate to `REVIEWING.md` only after the workflow
-  contract's completion and evidence checks are satisfied.
-- Include a move to Reviewing in the coherent automatic checkpoint after
-  working-tree and staged-scope review. If it cannot be isolated safely, leave
-  it uncommitted and report why.
+  contract's completion and evidence checks are satisfied. Confirm its branch
+  still points to the exact candidate commit.
+- Create the Reviewing move as a coherent automatic tracking checkpoint on the
+  canonical coordinating branch after working-tree and staged-scope review.
+  Never create that checkpoint on the candidate branch. If the transition
+  cannot be isolated safely, leave the card In progress and report why.
 - After technical review, record durable outcomes in changelog, documentation,
   or an ADR as appropriate, then remove the card only when the user accepts it.
   Return it to Planning if material work remains. Close or reject intake only

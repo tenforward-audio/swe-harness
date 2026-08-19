@@ -45,8 +45,9 @@ release, history rewriting, or deletion of durable review evidence. Do not
   unique work exists. Use ancestry for merge or fast-forward integration; for
   squash or cherry-pick, use the recorded commit mapping and patch comparison
   rather than pretending ancestry proves equivalence.
-- For completed handoff, verify the recipient has the pinned candidate and the
-  returned evidence no longer depends on the local worktree.
+- For completed handoff, verify the recipient preserves the exact pinned
+  candidate under a durable reference independent of the local branch and that
+  the returned evidence no longer depends on the local worktree.
 - For deliberate abandonment, inspect every commit and local change since the
   common base. Summarise what would be discarded and stop unless the user's
   authority clearly covers it.
@@ -69,9 +70,10 @@ check fails. Never delete first and investigate afterwards.
    its registration and path are gone.
 2. Delete only the explicitly authorised local branch. Prefer normal deletion
    when Git recognises it as merged. Force-delete it only when the completed
-   preflight proves a squash or cherry-pick integration, or proves deliberate
-   abandonment with all material findings and work preserved, and the user
-   explicitly authorised that branch's deletion.
+   preflight proves a squash or cherry-pick integration, proves a completed
+   handoff retains the exact commit under an independent durable reference, or
+   proves deliberate abandonment with all material findings and work preserved,
+   and the user explicitly authorised that branch's deletion.
 3. Do not run broad pruning or delete another stale worktree as a side effect.
    Leave every remote ref untouched.
 4. Report the findings record or evidence retained, the exact local worktree

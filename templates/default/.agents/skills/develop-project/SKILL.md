@@ -75,3 +75,5 @@ contributing guide.
 
 Return the exact candidate commit, checks, and observed or unobserved evidence
 to `deliver-project-work` or `manage-project-work` for the Reviewing transition.
+Leave the implementation branch pinned to that commit; lifecycle tracking is a
+separate checkpoint on the canonical coordinating branch.

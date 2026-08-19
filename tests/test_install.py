@@ -49,12 +49,22 @@ class InstallTest(TestCase):
             ).read_text(encoding="utf-8")
             self.assertIn("List open tickets", manage)
             self.assertIn("items for review", manage)
+            self.assertIn("open tickets” as every unclosed `ISSUE-*`", manage)
+            self.assertIn("Treat “open work” as both issue and", manage)
 
             deliver = (
                 target / ".agents/skills/deliver-project-work/SKILL.md"
             ).read_text(encoding="utf-8")
+            workflow = (target / ".agents/WORKFLOW.md").read_text(encoding="utf-8")
             self.assertIn("Ask for explicit confirmation", deliver)
             self.assertIn("Finish at Reviewing", deliver)
+            self.assertIn("Do not turn a second tracked identifier", deliver)
+            self.assertIn("candidate branch must remain pinned", deliver)
+            self.assertIn(
+                "Never create that checkpoint on the candidate branch", manage
+            )
+            self.assertIn("separate checkpoint on the canonical", workflow)
+            self.assertIn("do not combine\nmultiple tracked identifiers", workflow)
 
             cleanup = (
                 target / ".agents/skills/clean-up-worktree/SKILL.md"
@@ -64,8 +74,23 @@ class InstallTest(TestCase):
             ).read_text(encoding="utf-8")
             research = (target / ".agents/RESEARCH.md").read_text(encoding="utf-8")
             self.assertIn("remote branch deletion", cleanup)
+            self.assertIn("independent durable reference", cleanup)
             self.assertIn("clean-up-worktree", integration)
             self.assertIn("knowledge archive", research)
+
+    def test_readme_distinguishes_open_tickets_work_and_parallel_lanes(
+        self,
+    ) -> None:
+        readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("Show me the open tickets", readme)
+        self.assertIn("Lists open issues across intake", readme)
+        self.assertIn("Show me the open work", readme)
+        self.assertIn("open issues and feature ideas", readme)
+        self.assertIn("FEATURE-001 with API and UI lanes in parallel", readme)
+        self.assertNotIn("FEATURE-001 and FEATURE-002 in parallel", readme)
 
     def test_fresh_install_is_complete_and_idempotent(self) -> None:
         with TemporaryDirectory() as directory:
