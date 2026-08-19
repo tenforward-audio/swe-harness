@@ -44,6 +44,8 @@ All notable changes to `SWE Harness` are recorded here.
 
 ### Fixed
 
+- Corrected the MIT copyright holder to Ten Forward Ltd.
+
 ### Security
 
 - Added conflict blocking, project-edit preservation, symbolic-link and path
