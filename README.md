@@ -55,6 +55,7 @@ records why authority stays in the repository.
 | Reusable template parity | [`.agents/HARNESS.md`](.agents/HARNESS.md) |
 | Durable architectural rationale | [`.agents/decisions/`](.agents/decisions/) |
 | Delivered user-visible changes | [`CHANGELOG.md`](CHANGELOG.md) |
+| Repository licence | [`LICENSE`](LICENSE) |
 
 The reusable sources above are never copied back from an installed project or a
 personal skill directory. Once rendered, a target repository owns its project
@@ -109,3 +110,7 @@ checks authority structure without treating prose as a second database. It
 verifies required sources, internal links, resolved project setup, unique tracked
 identifiers, the work-in-progress limit, unique skill names, and installation
 metadata integrity.
+
+## Licence
+
+SWE Harness is available under the [MIT License](LICENSE).

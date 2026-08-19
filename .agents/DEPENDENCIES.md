@@ -1,7 +1,7 @@
 # Dependency policy
 
-- Project licence: not yet selected; do not distribute beyond private project
-  use until the owner makes and records this decision.
+- Project licence: MIT; preserve the copyright and licence notice in copies or
+  substantial portions of the software.
 - Exact versions: package manifests and lockfiles
 
 Prefer the standard library and existing dependencies when they credibly own the

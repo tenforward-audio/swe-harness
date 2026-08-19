@@ -20,6 +20,7 @@ All notable changes to `SWE Harness` are recorded here.
 - Installation provenance with validated paths and checksums for safe upgrades.
 - Project-agnostic skills for parallel-lane coordination, read-only candidate
   review, and explicitly authorised integration of reviewed changes.
+- MIT licensing for open-source use, modification, and redistribution.
 
 ### Changed
 
