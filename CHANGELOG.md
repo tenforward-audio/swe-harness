@@ -62,6 +62,8 @@ All notable changes to `SWE Harness` are recorded here.
   when an independent durable reference preserves the exact candidate.
 - Aligned the README's open-ticket and open-work examples with the canonical
   queue terminology.
+- Clarified that acceptance applies to completed items in Reviewing and is the
+  explicit action that removes their cards.
 
 ### Security
 

@@ -78,7 +78,7 @@ class InstallTest(TestCase):
             self.assertIn("clean-up-worktree", integration)
             self.assertIn("knowledge archive", research)
 
-    def test_readme_distinguishes_open_tickets_work_and_parallel_lanes(
+    def test_readme_examples_match_workflow_vocabulary_and_states(
         self,
     ) -> None:
         readme = (Path(__file__).resolve().parents[1] / "README.md").read_text(
@@ -91,6 +91,8 @@ class InstallTest(TestCase):
         self.assertIn("open issues and feature ideas", readme)
         self.assertIn("FEATURE-001 with API and UI lanes in parallel", readme)
         self.assertNotIn("FEATURE-001 and FEATURE-002 in parallel", readme)
+        self.assertIn("Accepts an item from Reviewing", readme)
+        self.assertIn("Codex stops there until you accept", readme)
 
     def test_fresh_install_is_complete_and_idempotent(self) -> None:
         with TemporaryDirectory() as directory:

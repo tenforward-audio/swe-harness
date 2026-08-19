@@ -18,7 +18,7 @@ start of a request help it choose the right workflow:
 | `Work on ISSUE-001` | Shows one plan for confirmation, then starts the item, implements it, runs checks, and moves passing work to Reviewing |
 | `Work on FEATURE-001 with API and UI lanes in parallel` | Confirms one parent outcome, then gives each code-changing lane its own Git worktree and branch |
 | `Review commit abc123` | Reviews that candidate without changing it |
-| `Accept ISSUE-001` | Records the result and removes the completed card |
+| `Accept ISSUE-001` | Accepts an item from Reviewing, records its durable result, and removes the card |
 | `Prepare a release` | Checks versioning and release readiness without publishing |
 
 Support tickets and feature requests are capture-only: Codex records them and
@@ -27,7 +27,7 @@ stops. When you are ready, say `Work on ISSUE-001`. `Start ISSUE-001` and
 you to confirm the scope, checks, branch, and any required worktree. It then
 moves the item through Planning and In progress, implements it, and runs the
 checks. Failed or incomplete work stays In progress; passing work moves to
-Reviewing. Acceptance is still a separate decision.
+Reviewing. Codex stops there until you accept the result or request changes.
 
 You can still request a status-only action such as `Promote ISSUE-001 to
 Planning`, but most users should not need to manage those steps themselves.
