@@ -7,8 +7,9 @@
 
 This is the quiet intake queue for concrete bugs, tasks, maintenance, and
 security work that has not been selected. It is not an active plan. Capture new
-items with `capture-project-intake`; manage existing items with
-`manage-project-work`. Card fields and transitions live only in
+items with `capture-project-intake`; list or move existing items with
+`manage-project-work`; and use `deliver-project-work` to take one selected item
+through implementation and Reviewing. Card fields and transitions live only in
 [`WORKFLOW.md`](WORKFLOW.md).
 
 ## Open issues

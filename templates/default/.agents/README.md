@@ -40,7 +40,7 @@ checksums used only for safe reconciliation.
 - [Decisions](decisions/0000-template.md): ADR template for durable choices.
 
 Repo-local skills under `skills/` separate intake capture, read-only
-investigation, filtered work listing and lifecycle management, parallel-lane
-coordination, mutating development, candidate review, reviewed integration, and
-release work. Load the narrowest matching skill; intake queues are not routine
-context.
+investigation, filtered work listing and lifecycle management, confirmed
+end-to-end delivery, parallel-lane coordination, mutating development,
+candidate review, reviewed integration, and release work. Load the narrowest
+matching skill; intake queues are not routine context.

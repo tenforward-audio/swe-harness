@@ -14,21 +14,29 @@ start of a request help it choose the right workflow:
 | `Support ticket: checkout fails after applying a discount` | Records an issue without starting work on it |
 | `Feature request: add an order history page` | Records a feature idea without implementing it |
 | `Show me the open tickets` | Lists the current issue and feature queues |
-| `Promote ISSUE-001 to Planning` | Turns the selected ticket into a scoped work card |
-| `Start ISSUE-001` | Moves it into the single In progress slot |
-| `Work on FEATURE-001 and FEATURE-002 in parallel` | Keeps one parent card In progress and creates a separate Git worktree for each code-changing lane, checked out on its own branch |
-| `Implement ISSUE-001` | Makes the change and runs the project checks |
+| `Work on ISSUE-001` | Shows one plan for confirmation, then starts the item, implements it, runs checks, and moves passing work to Reviewing |
+| `Work on FEATURE-001 and FEATURE-002 in parallel` | Confirms how the work fits under one parent, then gives each code-changing lane its own Git worktree and branch |
 | `Review commit abc123` | Reviews that candidate without changing it |
 | `Accept ISSUE-001` | Records the result and removes the completed card |
 | `Prepare a release` | Checks versioning and release readiness without publishing |
 
 Support tickets and feature requests are capture-only: Codex records them and
-stops. Ask it to promote or implement an item when you are ready to act on it.
+stops. When you are ready, say `Work on ISSUE-001`. `Start ISSUE-001` and
+`Implement ISSUE-001` mean the same thing for a recorded item: Codex first asks
+you to confirm the scope, checks, branch, and any required worktree. It then
+moves the item through Planning and In progress, implements it, and runs the
+checks. Failed or incomplete work stays In progress; passing work moves to
+Reviewing. Acceptance is still a separate decision.
+
+You can still request a status-only action such as `Promote ISSUE-001 to
+Planning`, but most users should not need to manage those steps themselves.
 
 The In progress board still contains one parent card during parallel work. If
-you explicitly ask to work on several features at once, Codex records separate
-lanes on that card and creates a separate Git worktree for each lane that
-changes files, with each worktree checked out on its own branch. Integration
+you explicitly ask to work on several compatible features at once, Codex first
+confirms how they will be coordinated under that parent. It records separate
+lanes and creates a separate Git worktree for each lane that changes files,
+with each worktree checked out on its own branch. If the items are independent,
+Codex asks which one to start instead of silently combining them. Integration
 remains a separate, explicitly approved step.
 
 ## Workflow
@@ -47,7 +55,7 @@ flowchart LR
 
     issue -->|promote| planning
     feature -->|promote| planning
-    planning -->|start| progress
+    planning -->|work on after confirmation| progress
     progress -->|checks complete| review
     review -->|accept| outcome
     review -->|changes needed| planning

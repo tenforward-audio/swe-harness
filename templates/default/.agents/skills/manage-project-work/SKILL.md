@@ -1,6 +1,6 @@
 ---
 name: manage-project-work
-description: List open tickets, list items awaiting review, summarise status, promote, start, record acceptance, return, or close already-recorded work in this project's Markdown intake queues and Planning, In progress, and Reviewing boards. Use for filtered work lists, selected IDs, lifecycle transitions, and manual acceptance evidence. Do not use for initial intake capture, parallel-lane orchestration, technical candidate review, engineering implementation, integration, or release work.
+description: List open tickets or review items, summarise status, apply planning-only lifecycle transitions, record acceptance, return, or close already-recorded work in this project's Markdown queues and boards. Use for filtered work lists, explicit status-only changes, and manual acceptance evidence. Do not use for initial intake, end-to-end delivery, parallel-lane orchestration, technical review, implementation, integration, or releases.
 ---
 
 # Manage Project Work
@@ -39,6 +39,10 @@ skill owns the procedure for applying them.
 
 ## Promote and advance deliberately
 
+- Route requests to work on, start, or implement a recorded identifier through
+  [`deliver-project-work`](../deliver-project-work/SKILL.md). Keep explicit
+  wording such as "promote to Planning" or "start without implementing" as a
+  lifecycle-only request in this skill.
 - Treat requests to list, inspect, or summarise intake as read-only triage.
   Return readiness to plan or the most important missing detail.
 - Promotion requires a deliberate user choice. Move the item to `PLANNING.md`
@@ -57,6 +61,9 @@ skill owns the procedure for applying them.
 
 ## Keep lifecycle ownership narrow
 
+- [`deliver-project-work`](../deliver-project-work/SKILL.md) owns the confirmed
+  end-to-end path from a selected recorded item through Reviewing. This skill
+  performs its lifecycle transitions but not its implementation.
 - [`coordinate-parallel-work`](../coordinate-parallel-work/SKILL.md) owns lane,
   common-base, worktree, dependency, and ownership orchestration.
 - [`review-project-change`](../review-project-change/SKILL.md) owns read-only

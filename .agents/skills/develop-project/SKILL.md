@@ -1,9 +1,15 @@
 ---
 name: develop-project
-description: Implement, fix, refactor, test, or change dependencies in this project after the user explicitly authorises a mutation or selects a work item. Use for code, configuration, documentation tied to changed behavior, dependency evaluation, and isolated parallel implementation. Do not use for read-only diagnosis, research, planning, technical review, intake or status administration, or release-only work.
+description: Implement, fix, refactor, test, or change dependencies after the user explicitly authorises an unrecorded mutation or a bounded In progress lane. Use for code, configuration, behavior-linked documentation, dependency evaluation, and isolated implementation. Do not use to advance a recorded item from intake or Planning, manage lifecycle state, investigate, technically review, integrate, or release.
 ---
 
 # Develop the Project
+
+For a recorded issue or feature, require an In progress parent card or an
+assigned implementation lane. Route a request to work on, start, or implement
+an item still in intake or Planning through
+[`deliver-project-work`](../deliver-project-work/SKILL.md). Do not independently
+move cards or edit canonical queues and boards.
 
 ## Implement from the owning boundary
 
@@ -66,3 +72,6 @@ Update public documentation, decisions, dependency records, security guidance,
 and the Unreleased changelog when their claims change. Finish with the
 verification, isolation, staged-diff review, and checkpoint procedure in the
 contributing guide.
+
+Return the exact candidate commit, checks, and observed or unobserved evidence
+to `deliver-project-work` or `manage-project-work` for the Reviewing transition.

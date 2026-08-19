@@ -20,6 +20,8 @@ All notable changes to `SWE Harness` are recorded here.
 - Installation provenance with validated paths and checksums for safe upgrades.
 - Project-agnostic skills for parallel-lane coordination, read-only candidate
   review, and explicitly authorised integration of reviewed changes.
+- Confirmed end-to-end delivery for a selected recorded item, covering its
+  lifecycle moves, implementation, checks, and handoff to Reviewing.
 - MIT licensing for open-source use, modification, and redistribution.
 
 ### Changed
@@ -35,8 +37,9 @@ All notable changes to `SWE Harness` are recorded here.
 - Made open-ticket and review-queue listing an explicit read-only behavior of
   `manage-project-work`, and narrowed review, coordination, and integration to
   one routed owner each.
-- Simplified the README around plain-language usage, parallel worktrees, the
-  current workflow, safe reconciliation, and the optional plugin surface.
+- Simplified the README around one plain-language work command, parallel
+  worktrees, the current workflow, safe reconciliation, and the optional plugin
+  surface.
 
 ### Deprecated
 

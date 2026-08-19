@@ -26,6 +26,28 @@ contain live state only and must not redefine this contract.
 | In progress | [`workboard/IN_PROGRESS.md`](workboard/IN_PROGRESS.md) | The WIP slot is free and ownership is clear | Implementation and required checks are complete |
 | Reviewing | [`workboard/REVIEWING.md`](workboard/REVIEWING.md) | Evidence and any manual acceptance steps are recorded | User accepts it, requests changes, or rejects it |
 
+## Normal delivery path
+
+A user does not need to request every lifecycle transition. "Work on
+`ISSUE-001`", "start `FEATURE-001`", or "implement `ISSUE-001`" selects one
+recorded item for the confirmed end-to-end path owned by
+[`deliver-project-work`](skills/deliver-project-work/SKILL.md):
+
+1. Resolve the item and present its outcome, scope, checks, and branch or
+   worktree plan for confirmation.
+2. After confirmation, satisfy the Planning and In progress entry rules and
+   begin implementation on the approved branch.
+3. Keep failed or incomplete work In progress with evidence and one next
+   action.
+4. Move a passing candidate to Reviewing with its commit and verification
+   evidence.
+
+An explicit request to "promote to Planning" or "start without implementing"
+remains a lifecycle-only transition. Acceptance remains a separate user action.
+If the WIP slot is occupied, ask whether to leave the item in Planning, finish
+the current parent first, or explicitly coordinate compatible parallel lanes;
+never create a second parent or combine independent cards silently.
+
 A bounded, explicitly authorised change can be completed without durable card
 state. Capture it first when it must survive the current task, compete for
 priority, coordinate parallel lanes, or await later acceptance.

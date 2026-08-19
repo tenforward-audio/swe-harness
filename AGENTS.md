@@ -81,12 +81,16 @@ missing project setup and ask only when the current task depends on it.
   [capture intake](.agents/skills/capture-project-intake/SKILL.md), then stop.
 - Answer, diagnose, research, compare, plan, or audit:
   [investigate read-only](.agents/skills/investigate-project/SKILL.md).
-- List open tickets or review items, summarise status, promote, start, record
-  acceptance, return, or close recorded work:
+- Work on, start, or implement a selected recorded issue or feature from its
+  current state through confirmation, checks, and Reviewing:
+  [deliver project work](.agents/skills/deliver-project-work/SKILL.md).
+- List open tickets or review items, summarise status, make a planning-only
+  transition, record acceptance, return, or close recorded work:
   [manage project work](.agents/skills/manage-project-work/SKILL.md).
 - Coordinate explicitly requested parallel agents, lanes, or worktrees:
   [coordinate parallel work](.agents/skills/coordinate-parallel-work/SKILL.md).
-- Implement, fix, refactor, test, or change dependencies:
+- Implement an explicitly authorised unrecorded change or one bounded In
+  progress lane:
   [develop the project](.agents/skills/develop-project/SKILL.md).
 - Technically review a defined candidate commit, branch, worktree, or patch:
   [review a project change](.agents/skills/review-project-change/SKILL.md).
@@ -96,8 +100,9 @@ missing project setup and ask only when the current task depends on it.
   [release the project](.agents/skills/release-project/SKILL.md).
 
 Load only the skill and references relevant to the current task.
-For parallel implementation, the coordinator uses `coordinate-parallel-work`
-while each mutating lane follows `develop-project`.
+`deliver-project-work` owns the normal recorded-item path. For parallel
+implementation, it uses `coordinate-parallel-work` while each mutating lane
+follows `develop-project`.
 
 ### Skill use response
 

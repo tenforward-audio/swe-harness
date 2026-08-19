@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver Project Work"
+  short_description: "Take selected work from intake to review"
+  default_prompt: "Use $deliver-project-work to confirm and complete ISSUE-001 through review."

@@ -32,6 +32,7 @@ class InstallTest(TestCase):
 
             expected_skills = (
                 "coordinate-parallel-work",
+                "deliver-project-work",
                 "integrate-reviewed-change",
                 "review-project-change",
             )
@@ -47,6 +48,12 @@ class InstallTest(TestCase):
             ).read_text(encoding="utf-8")
             self.assertIn("List open tickets", manage)
             self.assertIn("items for review", manage)
+
+            deliver = (
+                target / ".agents/skills/deliver-project-work/SKILL.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("Ask for explicit confirmation", deliver)
+            self.assertIn("Finish at Reviewing", deliver)
 
     def test_fresh_install_is_complete_and_idempotent(self) -> None:
         with TemporaryDirectory() as directory:

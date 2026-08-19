@@ -1,4 +1,4 @@
 interface:
   display_name: "Manage Project Work"
-  short_description: "Coordinate workboards and parallel ownership"
-  default_prompt: "Use $manage-project-work to review or advance recorded project work and coordinate its ownership."
+  short_description: "List and transition canonical project work"
+  default_prompt: "Use $manage-project-work to list recorded work or apply an explicit lifecycle-only transition."
