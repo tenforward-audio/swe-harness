@@ -16,6 +16,7 @@ start of a request help it choose the right workflow:
 | `Show me the open tickets` | Lists the current issue and feature queues |
 | `Promote ISSUE-001 to Planning` | Turns the selected ticket into a scoped work card |
 | `Start ISSUE-001` | Moves it into the single In progress slot |
+| `Work on FEATURE-001 and FEATURE-002 in parallel` | Keeps one parent card In progress and gives each code-changing lane its own Git worktree |
 | `Implement ISSUE-001` | Makes the change and runs the project checks |
 | `Review commit abc123` | Reviews that candidate without changing it |
 | `Accept ISSUE-001` | Records the result and removes the completed card |
@@ -23,6 +24,11 @@ start of a request help it choose the right workflow:
 
 Support tickets and feature requests are capture-only: Codex records them and
 stops. Ask it to promote or implement an item when you are ready to act on it.
+
+The In progress board still contains one parent card during parallel work. If
+you explicitly ask to work on several features at once, Codex records separate
+lanes on that card and creates an isolated branch and Git worktree for each lane
+that changes files. Integration remains a separate, explicitly approved step.
 
 ## Workflow
 
