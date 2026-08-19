@@ -8,6 +8,20 @@ from swe_harness.template import TemplateBundle, default_answers, default_templa
 
 
 class InstallTest(TestCase):
+    def test_default_template_installs_concise_test_output_guidance(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            apply_plan(plan_init(bundle, target, default_answers(target)))
+
+            style_guide = (target / ".agents/STYLE_GUIDE.md").read_text(
+                encoding="utf-8"
+            )
+
+            self.assertIn("Keep expected-success paths silent", style_guide)
+            self.assertIn("compact aggregate pass summary", style_guide)
+            self.assertIn("diagnose failures", style_guide)
+
     def test_default_template_installs_and_routes_specialised_workflow_skills(
         self,
     ) -> None:

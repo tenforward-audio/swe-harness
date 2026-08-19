@@ -33,6 +33,14 @@ patterns are authoritative. This guide supplies only cross-language defaults.
 
 - Name tests after behavior and cover success, invalid input, operational
   failure, compatibility, and preservation where relevant.
+- Keep expected-success paths silent: test code, fixtures, and helpers must not
+  emit routine progress, logs, payloads, or per-case success details. Capture
+  output from the code under test unless that output is the behavior being
+  verified.
+- Configure routine test commands to report a compact aggregate pass summary
+  without listing every successful case. Preserve failing test identities,
+  assertion or error details, and the relevant captured output needed to
+  diagnose failures.
 - Inspect deterministic fixture or snapshot changes; never regenerate blindly.
 - Avoid placeholders presented as completion, blanket suppressions, speculative
   configuration, and rewrites made only for stylistic preference.
