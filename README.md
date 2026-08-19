@@ -77,7 +77,8 @@ issue or idea -> Planning -> In progress -> Reviewing -> accepted history
 
 Read [the workflow contract](.agents/WORKFLOW.md) before changing a queue or
 board. Use the narrow intent-specific skill linked from [`AGENTS.md`](AGENTS.md)
-before investigating, implementing, coordinating, or releasing work.
+before investigating, listing or transitioning work, coordinating parallel
+lanes, implementing, reviewing, integrating, or releasing work.
 
 ## Optional Codex plugin
 

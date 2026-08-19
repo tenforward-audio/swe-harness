@@ -18,6 +18,8 @@ All notable changes to `SWE Harness` are recorded here.
   `doctor` commands.
 - Optional skills-only Codex plugin assembled from canonical repository sources.
 - Installation provenance with validated paths and checksums for safe upgrades.
+- Project-agnostic skills for parallel-lane coordination, read-only candidate
+  review, and explicitly authorised integration of reviewed changes.
 
 ### Changed
 
@@ -26,6 +28,9 @@ All notable changes to `SWE Harness` are recorded here.
 - Extended validation to installation metadata and built-plugin integration.
 - Standardised the first progress update for routed project and setup skills so
   users can see which skill is active and what job it is performing.
+- Made open-ticket and review-queue listing an explicit read-only behavior of
+  `manage-project-work`, and narrowed review, coordination, and integration to
+  one routed owner each.
 
 ### Deprecated
 

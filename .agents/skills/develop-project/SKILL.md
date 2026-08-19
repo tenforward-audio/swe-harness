@@ -34,17 +34,15 @@ when verification depends on it.
   cache invalidation, and version identifiers are not speculative legacy
   support.
 
-## Isolate parallel mutations
+## Work inside assigned isolation
 
-- Read-only analysis may share a checkout; each concurrent mutating lane needs a
-  separate worktree, non-overlapping ownership, and a common base.
-- Keep lane output bounded and dependencies explicit. Do not have multiple lanes
-  mutate the same file or stateful resource.
-- Create a named branch before the lane's first checkpoint or review. Never use
-  one branch in multiple worktrees or reuse a completed branch for new work.
-- Return commits, verification evidence, conflicts, and review notes to the
-  coordinator. Do not update canonical queues or status boards from a
-  background worktree.
+- A mutating lane created by
+  [`coordinate-parallel-work`](../coordinate-parallel-work/SKILL.md) must use
+  its recorded common base, worktree, branch, dependencies, and owned boundaries.
+- Do not expand lane scope, mutate another lane's files or stateful resources,
+  or edit canonical queues and status boards from a background worktree.
+- Return checkpoint commits, verification evidence, conflicts, and material
+  review notes to the coordinator.
 - Parallel permission does not authorise merge, branch deletion, history
   rewriting, push, or remote changes.
 

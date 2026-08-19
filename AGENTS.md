@@ -79,16 +79,25 @@ missing project setup and ask only when the current task depends on it.
 
 - Explicit support ticket or feature request:
   [capture intake](.agents/skills/capture-project-intake/SKILL.md), then stop.
-- Answer, diagnose, research, compare, plan, or technical review:
+- Answer, diagnose, research, compare, plan, or audit:
   [investigate read-only](.agents/skills/investigate-project/SKILL.md).
-- List, summarise, promote, start, review, close, or coordinate recorded work:
+- List open tickets or review items, summarise status, promote, start, record
+  acceptance, return, or close recorded work:
   [manage project work](.agents/skills/manage-project-work/SKILL.md).
+- Coordinate explicitly requested parallel agents, lanes, or worktrees:
+  [coordinate parallel work](.agents/skills/coordinate-parallel-work/SKILL.md).
 - Implement, fix, refactor, test, or change dependencies:
   [develop the project](.agents/skills/develop-project/SKILL.md).
+- Technically review a defined candidate commit, branch, worktree, or patch:
+  [review a project change](.agents/skills/review-project-change/SKILL.md).
+- Integrate or merge an already reviewed candidate after explicit approval:
+  [integrate a reviewed change](.agents/skills/integrate-reviewed-change/SKILL.md).
 - Prepare versions, release notes, tags, or publication:
   [release the project](.agents/skills/release-project/SKILL.md).
 
 Load only the skill and references relevant to the current task.
+For parallel implementation, the coordinator uses `coordinate-parallel-work`
+while each mutating lane follows `develop-project`.
 
 ### Skill use response
 

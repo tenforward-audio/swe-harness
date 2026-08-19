@@ -8,6 +8,32 @@ from swe_harness.template import TemplateBundle, default_answers, default_templa
 
 
 class InstallTest(TestCase):
+    def test_default_template_installs_and_routes_specialised_workflow_skills(
+        self,
+    ) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            apply_plan(plan_init(bundle, target, default_answers(target)))
+
+            expected_skills = (
+                "coordinate-parallel-work",
+                "integrate-reviewed-change",
+                "review-project-change",
+            )
+            agents = (target / "AGENTS.md").read_text(encoding="utf-8")
+            for name in expected_skills:
+                relative = Path(f".agents/skills/{name}/SKILL.md")
+                skill = (target / relative).read_text(encoding="utf-8")
+                self.assertIn(f"name: {name}", skill)
+                self.assertIn(relative.as_posix(), agents)
+
+            manage = (
+                target / ".agents/skills/manage-project-work/SKILL.md"
+            ).read_text(encoding="utf-8")
+            self.assertIn("List open tickets", manage)
+            self.assertIn("items for review", manage)
+
     def test_fresh_install_is_complete_and_idempotent(self) -> None:
         with TemporaryDirectory() as directory:
             target = Path(directory)

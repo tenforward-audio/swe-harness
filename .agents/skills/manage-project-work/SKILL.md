@@ -1,6 +1,6 @@
 ---
 name: manage-project-work
-description: List, summarise, promote, start, review, close, or coordinate already-recorded work in this project's Markdown intake queues and Planning, In progress, and Reviewing boards. Use for selected IDs, status overviews, work-cycle transitions, manual acceptance evidence, and parallel lane ownership. Do not use for initial intake capture, engineering implementation, or release work.
+description: List open tickets, list items awaiting review, summarise status, promote, start, record acceptance, return, or close already-recorded work in this project's Markdown intake queues and Planning, In progress, and Reviewing boards. Use for filtered work lists, selected IDs, lifecycle transitions, and manual acceptance evidence. Do not use for initial intake capture, parallel-lane orchestration, technical candidate review, engineering implementation, integration, or release work.
 ---
 
 # Manage Project Work
@@ -22,9 +22,24 @@ skill owns the procedure for applying them.
   `ID — status — outcome — owner branch (if any) — next review action`.
 - Move items and cards rather than copying them. Never reuse an identifier.
 
+## List filtered work read-only
+
+- Treat “open tickets” as every unclosed `ISSUE-*` record across issue intake,
+  Planning, In progress, and Reviewing. Treat “open work” as both issue and
+  feature records across those live states.
+- For “items for review” or equivalent wording, read only `REVIEWING.md` unless
+  the user explicitly requests candidates or review assignments in another
+  state.
+- When the user names a queue, state, type, or identifier, load only the owning
+  source. Load all queues and boards only for an explicit cross-lifecycle list.
+- Listing is read-only. Do not promote, start, accept, return, close, reorder, or
+  rewrite an item unless the user separately requests that transition.
+- Return a compact filtered list using the overview format above and say plainly
+  when no matching work exists.
+
 ## Promote and advance deliberately
 
-- Treat requests to list, review, or summarise intake as read-only triage.
+- Treat requests to list, inspect, or summarise intake as read-only triage.
   Return readiness to plan or the most important missing detail.
 - Promotion requires a deliberate user choice. Move the item to `PLANNING.md`
   using the selected card shape and promotion checks in the workflow contract.
@@ -35,21 +50,19 @@ skill owns the procedure for applying them.
 - Include a move to Reviewing in the coherent automatic checkpoint after
   working-tree and staged-scope review. If it cannot be isolated safely, leave
   it uncommitted and report why.
-- After review, record durable outcomes in changelog, documentation, or an ADR
-  as appropriate, then remove the card. Return it to Planning if material work
-  remains. Close or reject intake only when asked.
+- After technical review, record durable outcomes in changelog, documentation,
+  or an ADR as appropriate, then remove the card only when the user accepts it.
+  Return it to Planning if material work remains. Close or reject intake only
+  when asked.
 
-## Coordinate parallel work centrally
+## Keep lifecycle ownership narrow
 
-- Keep status boards canonical in the coordinating checkout. Background
-  worktrees must not independently promote cards, rewrite queues, or reconcile
-  global state.
-- Keep one parent card In progress. Record each lane on it with bounded output,
-  read-only or mutating status, common base, dependencies, owned boundaries, and
-  review branch when one exists. Do not record machine-specific worktree paths.
-- Use the branch as durable owner of reviewable changes and the worktree as its
-  isolated checkout. Require each lane to return commits, verification evidence,
-  and review notes to the coordinator.
-- Move the parent card to Reviewing only after required lanes are reviewed,
-  integrated, and the coherent outcome passes its gates. Never integrate
-  unreviewed code merely to reconcile tracking.
+- [`coordinate-parallel-work`](../coordinate-parallel-work/SKILL.md) owns lane,
+  common-base, worktree, dependency, and ownership orchestration.
+- [`review-project-change`](../review-project-change/SKILL.md) owns read-only
+  technical assessment and returns evidence without changing lifecycle state.
+- [`integrate-reviewed-change`](../integrate-reviewed-change/SKILL.md) owns an
+  explicitly authorised integration without inferring acceptance or closure.
+- Keep status boards canonical in the coordinating checkout. Background lanes
+  return commits and evidence but never independently promote cards, rewrite
+  queues, or reconcile global state.

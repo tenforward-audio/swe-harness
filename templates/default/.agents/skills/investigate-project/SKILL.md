@@ -1,6 +1,6 @@
 ---
 name: investigate-project
-description: Answer, explain, diagnose, research, compare, plan, or technically review this project without changing product behavior or work tracking. Use for root-cause analysis, architecture or implementation questions, feasibility and option comparisons, requested plans, audits, and a second pair of eyes. Do not use for explicitly framed intake, implementation, queue changes, or release actions.
+description: Answer, explain, diagnose, research, compare, plan, or audit this project without changing product behavior or work tracking. Use for root-cause analysis, architecture or implementation questions, feasibility and option comparisons, and requested plans. Do not use for a technical review of a defined candidate change, explicitly framed intake, implementation, queue changes, or release actions.
 ---
 
 # Investigate the Project
@@ -25,9 +25,11 @@ description: Answer, explain, diagnose, research, compare, plan, or technically 
   releases, or external systems.
 - Do not treat repository history as proof that an old data or API shape needs
   support; identify the concrete current compatibility obligation.
-- For reviews, lead with actionable correctness, security, data-loss,
+- For audits, lead with actionable correctness, security, data-loss,
   compatibility, concurrency, failure-behavior, and test findings. Say plainly
   when no material issue is found and note residual uncertainty.
+- A review of a defined candidate commit, branch, worktree, or patch belongs to
+  [`review-project-change`](../review-project-change/SKILL.md).
 - If the request explicitly includes implementation, hand the evidence to
   `develop-project` for the authorised change. Explicitly framed support
   tickets and feature requests remain capture-only.
