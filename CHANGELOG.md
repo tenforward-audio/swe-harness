@@ -26,7 +26,7 @@ All notable changes to `SWE Harness` are recorded here.
   local worktrees and branches, with preservation checks and a durable research
   findings archive.
 - Declared skill execution modes with non-recursive, bounded read-only
-  delegation for investigation and candidate review, inline authoritative
+  delegation for investigation and candidate review, non-self-delegating inline
   workflows, and explicitly requested mutating orchestration.
 - MIT licensing for open-source use, modification, and redistribution.
 

@@ -109,7 +109,10 @@ follows `develop-project`.
 Every routed project skill declares one execution mode immediately after its
 title:
 
-- `inline`: the active agent performs the workflow in the current context.
+- `inline`: the agent currently assigned the workflow performs it in its current
+  context, and selecting the skill does not itself cause delegation. An
+  `orchestrate-explicit` coordinator may still assign an `inline` skill to a
+  bounded worker in its required isolation.
 - `delegate-readonly`: after reading the skill and its required project
   instructions, the active agent responsible for the user-facing outcome scopes
   the evidence work before dispatch. Use one read-only subagent when the job is

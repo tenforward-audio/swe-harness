@@ -106,6 +106,8 @@ class InstallTest(TestCase):
                 self.assertIn(f"`{mode}`", skill)
 
             agents = (target / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertIn("agent currently assigned the workflow", agents)
+            self.assertIn("may still assign an `inline` skill", agents)
             self.assertIn("Use one read-only subagent", agents)
             self.assertIn("dispatches multiple sibling read-only subagents", agents)
             self.assertIn("must not dispatch another subagent", agents)

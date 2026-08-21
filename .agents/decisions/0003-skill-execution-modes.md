@@ -34,8 +34,9 @@ from context isolation without weakening their authority or safety boundaries.
 Every canonical project skill declares one of three execution modes in its
 `SKILL.md`:
 
-- `inline` keeps authoritative, mutating, approval-sensitive, and compact
-  workflows in the active agent.
+- `inline` makes the agent currently assigned a workflow execute it in that
+  context without self-delegating. An explicit coordinator may still assign an
+  inline lane skill to an isolated worker.
 - `delegate-readonly` makes the active agent scope evidence gathering before
   dispatch. It uses one worker for a cohesive bounded job or splits broad work
   into non-overlapping sibling scopes itself. Investigation and candidate

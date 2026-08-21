@@ -45,9 +45,10 @@ automatically run in bounded read-only subagents when that capability is
 available, keeping detailed evidence gathering out of the main conversation's
 context. The active agent gives a cohesive job to one worker or splits broader
 work into independent sibling scopes; delegated workers never delegate again.
-Canonical-state changes and other mutating workflows remain with the active
-agent. Multi-agent implementation still starts only when you explicitly request
-parallel work.
+Canonical-state changes and directly routed mutations remain with the active
+agent; explicitly orchestrated mutating lanes run in their assigned isolated
+workers. Multi-agent implementation still starts only when you explicitly
+request parallel work.
 
 ## Workflow
 
