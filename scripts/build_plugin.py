@@ -42,6 +42,7 @@ def build(output: Path) -> None:
             staging / "templates",
             ignore=ignored,
         )
+        shutil.copy2(PROJECT_ROOT / "LICENSE", staging / "LICENSE")
         os.replace(staging, output)
     finally:
         shutil.rmtree(staging_parent, ignore_errors=True)

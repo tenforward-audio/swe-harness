@@ -40,7 +40,17 @@ class PluginBuildTest(TestCase):
             manifest = json.loads(
                 (plugin / ".codex-plugin/plugin.json").read_text(encoding="utf-8")
             )
+            source_manifest = json.loads(
+                (
+                    PROJECT_ROOT / "plugins/swe-harness/.codex-plugin/plugin.json"
+                ).read_text(encoding="utf-8")
+            )
             self.assertEqual("swe-harness", manifest["name"])
+            self.assertEqual(source_manifest["version"], manifest["version"])
+            self.assertEqual(
+                (PROJECT_ROOT / "LICENSE").read_text(encoding="utf-8"),
+                (plugin / "LICENSE").read_text(encoding="utf-8"),
+            )
             self.assertTrue((plugin / "lib/swe_harness/cli.py").is_file())
             agents = (plugin / "templates/default/AGENTS.md").read_text(
                 encoding="utf-8"

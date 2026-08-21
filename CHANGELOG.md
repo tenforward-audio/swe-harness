@@ -4,6 +4,8 @@ All notable changes to `SWE Harness` are recorded here.
 
 ## Unreleased
 
+## 0.1.0 - 2026-08-21
+
 ### Added
 
 - Repository-native project harness with intent-specific skills, intake queues,
@@ -49,6 +51,8 @@ All notable changes to `SWE Harness` are recorded here.
 - Made verified integration and completed research handoffs offer exact local
   cleanup while keeping lifecycle changes, remote deletion, and evidence
   removal separately authorised.
+- Defined support for the latest `0.1.x` release alongside the current
+  repository state.
 
 ### Deprecated
 
@@ -67,6 +71,8 @@ All notable changes to `SWE Harness` are recorded here.
   queue terminology.
 - Clarified that acceptance applies to completed items in Reviewing and is the
   explicit action that removes their cards.
+- Included the MIT licence notice in self-contained plugin builds and verified
+  release-version parity between source and built manifests.
 
 ### Security
 
