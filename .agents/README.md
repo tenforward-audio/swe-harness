@@ -19,7 +19,7 @@ template parity.
 | Durable abandoned research findings | [`RESEARCH.md`](RESEARCH.md) |
 | Desired plugin capabilities | [`PLUGINS.md`](PLUGINS.md) |
 | Reusable template parity | [`HARNESS.md`](HARNESS.md) |
-| Durable technical rationale | [`decisions/`](decisions/), including [repository authority](decisions/0001-repository-authority.md), [distribution](decisions/0002-distribution-and-reconciliation.md), and [skill execution modes](decisions/0003-skill-execution-modes.md) |
+| Durable technical rationale | [`decisions/`](decisions/), including [repository authority](decisions/0001-repository-authority.md), [distribution](decisions/0002-distribution-and-reconciliation.md), [skill execution modes](decisions/0003-skill-execution-modes.md), and [structured work-card relationships](decisions/0004-structured-work-card-relationships.md) |
 | Delivered user-visible history | [`CHANGELOG.md`](../CHANGELOG.md) |
 
 ## Normal context

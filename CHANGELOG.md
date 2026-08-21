@@ -4,6 +4,21 @@ All notable changes to `SWE Harness` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added explicit Track, Depends on, and Related to fields for live work cards,
+  plus formal branch, worktree, dependency, and ownership metadata for parallel
+  lanes.
+
+### Changed
+
+- Extended structural validation to enforce the complete card and lane schema,
+  live references, dependency cycles, canonical file ownership, and WIP limits.
+
+### Security
+
+- Reject symbolic-linked canonical tracking sources before reading card data.
+
 ## 0.1.0 - 2026-08-21
 
 ### Added

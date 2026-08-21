@@ -58,7 +58,9 @@ entirely.
 
 The repository remains canonical throughout. Local agent state and external
 trackers can help with the work, but they never silently replace project policy
-or cards. The full lifecycle lives in [`.agents/WORKFLOW.md`](.agents/WORKFLOW.md).
+or cards. Cards can declare tracks, live dependencies, relationships, and
+formal parallel lanes without introducing another tracker. The full lifecycle
+lives in [`.agents/WORKFLOW.md`](.agents/WORKFLOW.md).
 
 ## Install
 

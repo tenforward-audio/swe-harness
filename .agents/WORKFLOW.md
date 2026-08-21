@@ -76,6 +76,9 @@ Issues use this shape:
 - Report: What was observed or requested.
 - Expected outcome: Expected behavior, or "Not stated."
 - Acceptance notes: Constraints or reproduction details, or "Not stated."
+- Track: Stable logical workstream, or `Unclassified`.
+- Depends on: Comma-separated live card identifiers, or `None`.
+- Related to: Comma-separated live card identifiers, or `None`.
 ```
 
 Features use this shape:
@@ -87,6 +90,9 @@ Features use this shape:
 - User or project benefit: Intended outcome.
 - Constraints: Known limits, or "Not stated."
 - Open questions: Unknowns, or "Not stated."
+- Track: Stable logical workstream, or `Unclassified`.
+- Depends on: Comma-separated live card identifiers, or `None`.
+- Related to: Comma-separated live card identifiers, or `None`.
 ```
 
 Identifiers are allocated only by the `Next issue` or `Next feature` counter in
@@ -106,15 +112,39 @@ with this card. Omit only fields explicitly marked optional.
 - Constraints: Safety, compatibility, dependency, or timing limits
 - Exit checks: Observable behavior and configured automated gates
 - Manual acceptance: Steps, or "Not applicable"
+- Track: Stable logical workstream, or `Unclassified`
+- Depends on: Comma-separated live card identifiers, or `None`
+- Related to: Comma-separated live card identifiers, or `None`
 - Owner: Coordinating checkout or owner branch
 - Capabilities: Native tools and approved plugins needed, or "None"
 - Next action: The single next transition or review action
 ```
 
-An In progress card may add `Lanes` for parallel ownership. A Reviewing card
-must add `Evidence` with the exact pinned candidate commit, automated results,
-and manual steps labelled `Observed` or `Not observed`. Do not encode the same
-facts in a second card or external tracker.
+`Depends on` is directed: every identifier names a live prerequisite of the
+current card. `Related to` is undirected and needs to be recorded on only one of
+the related cards. References must name another identifier that exists in one
+canonical live queue or board. Remove a dependency after its prerequisite is
+accepted and leaves live state; never keep a dangling reference or dependency
+cycle.
+
+An In progress card may add parallel ownership using this exact shape. Lane
+identifiers are stable lower-case slugs scoped to their parent card. Lane
+dependencies name other lanes under the same parent. Do not record absolute
+worktree paths.
+
+```markdown
+- Common base: Exact commit shared by every lane
+- Lanes:
+  - Lane: parser
+    - Branch: codex/issue-001-parser
+    - Worktree: planned | active | retained | missing
+    - Depends on: Comma-separated lane identifiers, or `None`
+    - Owns: Files or architectural boundary
+```
+
+A Reviewing card must add `Evidence` with the exact pinned candidate commit,
+automated results, and manual steps labelled `Observed` or `Not observed`. Do
+not encode the same facts in a second card or external tracker.
 
 ## Transition checks
 
@@ -122,6 +152,7 @@ facts in a second card or external tracker.
 
 - The user deliberately selected the intake identifier.
 - Outcome, scope, constraints, exit checks, and acceptance approach are clear.
+- Track and every live dependency or relation are deliberate and valid.
 - The item is removed from its intake queue in the same change.
 
 ### Start In progress

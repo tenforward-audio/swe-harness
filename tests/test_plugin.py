@@ -52,6 +52,10 @@ class PluginBuildTest(TestCase):
                 (plugin / "LICENSE").read_text(encoding="utf-8"),
             )
             self.assertTrue((plugin / "lib/swe_harness/cli.py").is_file())
+            self.assertFalse((plugin / ".mcp.json").exists())
+            self.assertFalse((plugin / "mcp").exists())
+            self.assertFalse((plugin / "ui").exists())
+            self.assertNotIn("mcpServers", manifest)
             agents = (plugin / "templates/default/AGENTS.md").read_text(
                 encoding="utf-8"
             )

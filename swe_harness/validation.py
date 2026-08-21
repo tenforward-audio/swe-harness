@@ -9,21 +9,9 @@ from urllib.parse import unquote
 
 from .install import MANIFEST_PATH, destination_safety_error, read_manifest, sha256
 from .template import PLACEHOLDER_PATTERN, TemplateBundle
+from .work_cards import inspect_work_cards
 
 
-TRACKING_PATHS = (
-    Path(".agents/ISSUES.md"),
-    Path(".agents/FEATURES.md"),
-    Path(".agents/workboard/PLANNING.md"),
-    Path(".agents/workboard/IN_PROGRESS.md"),
-    Path(".agents/workboard/REVIEWING.md"),
-)
-TRACKED_ID_PATTERN = re.compile(
-    r"^###\s+((?:ISSUE|FEATURE)-\d{3,})\b", re.MULTILINE
-)
-CARD_PATTERN = re.compile(
-    r"^###\s+(?:ISSUE|FEATURE)-\d{3,}\b", re.MULTILINE
-)
 MARKDOWN_LINK_PATTERN = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 SKILL_NAME_PATTERN = re.compile(
     r"\A---\s*\n.*?^name:\s*([^\s]+)\s*$", re.MULTILINE | re.DOTALL
@@ -95,30 +83,10 @@ def inspect_harness(
                     Finding("ERROR", f"broken link in {relative}: {raw_target}")
                 )
 
-    locations: dict[str, list[str]] = {}
-    for relative in TRACKING_PATHS:
-        path = resolved_root / relative
-        if not path.is_file():
-            continue
-        for identifier in TRACKED_ID_PATTERN.findall(path.read_text(encoding="utf-8")):
-            locations.setdefault(identifier, []).append(relative.as_posix())
-    for identifier, paths in sorted(locations.items()):
-        if len(paths) > 1:
-            findings.append(
-                Finding(
-                    "ERROR",
-                    f"tracked identifier {identifier} appears in multiple sources: "
-                    + ", ".join(paths),
-                )
-            )
-
-    in_progress = resolved_root / ".agents/workboard/IN_PROGRESS.md"
-    if in_progress.is_file():
-        card_count = len(CARD_PATTERN.findall(in_progress.read_text(encoding="utf-8")))
-        if card_count > 1:
-            findings.append(
-                Finding("ERROR", f"WIP limit exceeded: found {card_count} in-progress cards")
-            )
+    findings.extend(
+        Finding(item.severity, item.message)
+        for item in inspect_work_cards(resolved_root)
+    )
 
     names: dict[str, list[str]] = {}
     skills_dir = resolved_root / ".agents/skills"

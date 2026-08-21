@@ -68,6 +68,14 @@ class CliTest(TestCase):
             self.assertEqual(2, code)
             self.assertIn("UNRESOLVED", output)
 
+    def test_map_data_is_not_a_harness_command(self) -> None:
+        stderr = io.StringIO()
+        with redirect_stderr(stderr), self.assertRaises(SystemExit) as raised:
+            main(["map-data"])
+
+        self.assertEqual(2, raised.exception.code)
+        self.assertIn("invalid choice", stderr.getvalue())
+
     @staticmethod
     def _run(arguments: list[str]) -> tuple[int, str]:
         stdout = io.StringIO()
