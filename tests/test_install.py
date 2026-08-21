@@ -106,8 +106,17 @@ class InstallTest(TestCase):
                 self.assertIn(f"`{mode}`", skill)
 
             agents = (target / "AGENTS.md").read_text(encoding="utf-8")
-            self.assertIn("automatically dispatches exactly one bounded", agents)
+            self.assertIn("Use one read-only subagent", agents)
+            self.assertIn("dispatches multiple sibling read-only subagents", agents)
+            self.assertIn("must not dispatch another subagent", agents)
+            self.assertIn("returns that evidence and a proposed", agents)
             self.assertIn("continue inline and disclose", agents)
+            for name in ("investigate-project", "review-project-change"):
+                skill = (
+                    target / f".agents/skills/{name}/SKILL.md"
+                ).read_text(encoding="utf-8")
+                self.assertIn("worker already delegated", skill)
+                self.assertIn("must not dispatch another subagent", skill)
 
     def test_readme_examples_match_workflow_vocabulary_and_states(
         self,

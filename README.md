@@ -41,11 +41,13 @@ the parent and leaves the others where they are instead of silently combining
 cards. Integration remains a separate, explicitly approved step.
 
 Skills declare how they use agent context. Investigation and candidate review
-automatically run in one bounded read-only subagent when that capability is
+automatically run in bounded read-only subagents when that capability is
 available, keeping detailed evidence gathering out of the main conversation's
-context. Canonical-state changes and other mutating workflows remain with the
-active agent. Multi-agent implementation still starts only when you explicitly
-request parallel work.
+context. The active agent gives a cohesive job to one worker or splits broader
+work into independent sibling scopes; delegated workers never delegate again.
+Canonical-state changes and other mutating workflows remain with the active
+agent. Multi-agent implementation still starts only when you explicitly request
+parallel work.
 
 ## Workflow
 

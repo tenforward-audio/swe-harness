@@ -9,6 +9,11 @@ description: Technically review a defined candidate commit, branch, worktree, or
 
 `delegate-readonly`
 
+Only the active agent responsible for the user-facing outcome applies this
+mode. A worker already delegated a review executes its assigned scope inline
+and must not dispatch another subagent. If the scope is too broad or blocked,
+return the evidence and a proposed split to the active agent.
+
 ## Pin the review target
 
 1. Read the root `AGENTS.md`, relevant policies, owning implementation, and

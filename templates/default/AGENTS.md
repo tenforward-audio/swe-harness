@@ -57,10 +57,13 @@ missing project setup and ask only when the current task depends on it.
 
 ## Parallel work
 
-- Read-only lanes may share a checkout. Give every concurrent mutating lane an
+- Automatic read-only evidence workers may share a checkout and do not require
+  tracked work state. Their scope and delegation depth follow the skill
+  execution-mode policy below.
+- For explicitly requested parallel engineering lanes, name one parent In
+  progress card, the common base, bounded lanes, dependencies, and owned files
+  or boundaries before dispatch. Give every concurrent mutating lane an
   isolated worktree and non-overlapping ownership.
-- Before dispatch, name one parent In progress card, the common base, bounded
-  lanes, dependencies, and owned files or boundaries.
 - A branch is the durable review identity; create one before checkpoint or
   review, never check it out in multiple worktrees, and never reuse it for a
   different change.
@@ -108,19 +111,29 @@ title:
 
 - `inline`: the active agent performs the workflow in the current context.
 - `delegate-readonly`: after reading the skill and its required project
-  instructions, the active agent automatically dispatches exactly one bounded
-  read-only subagent when subagents are available. Direct it to follow the same
-  skill, and give it only the user question, repository location, scope,
-  constraints, and required evidence rather than unrelated conversation
-  history. The active agent then checks and synthesises the returned evidence
-  without repeating the full investigation.
+  instructions, the active agent responsible for the user-facing outcome scopes
+  the evidence work before dispatch. Use one read-only subagent when the job is
+  cohesive and bounded. If one worker would need to re-delegate or the work has
+  independent evidence boundaries, the active agent splits it into bounded,
+  non-overlapping scopes and dispatches multiple sibling read-only subagents
+  itself. Give each worker only its assigned question, repository location,
+  scope, constraints, and required evidence rather than unrelated conversation
+  history.
 - `orchestrate-explicit`: dispatch is allowed only after the user explicitly
   requests parallel work. Follow the skill's lane, ownership, and isolation
   rules before creating agents or worktrees.
 
-If a read-only subagent is unavailable or fails, continue inline and disclose
+Every read-only dispatch must tell the recipient that it is a delegated worker.
+A delegated worker follows the selected skill's workflow and safety rules but
+treats its execution mode as `inline`: it must not dispatch another subagent. If
+its assignment is too broad or blocked, it returns that evidence and a proposed
+split to the active agent, which may rescope the work and dispatch siblings. The
+active agent checks and synthesises returned evidence without repeating the full
+investigation.
+
+If read-only subagents are unavailable or fail, continue inline and disclose
 the fallback. Delegation never broadens mutation, approval, lifecycle, branch,
-worktree, integration, remote, or release authority. A subagent report is
+worktree, integration, remote, or release authority. Subagent reports are
 evidence for the active agent, not independent authority to act.
 
 ### Skill use response

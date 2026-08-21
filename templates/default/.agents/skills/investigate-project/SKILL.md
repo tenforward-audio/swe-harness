@@ -9,6 +9,11 @@ description: Answer, explain, diagnose, research, compare, plan, or audit this p
 
 `delegate-readonly`
 
+Only the active agent responsible for the user-facing outcome applies this
+mode. A worker already delegated an investigation executes its assigned scope
+inline and must not dispatch another subagent. If the scope is too broad or
+blocked, return the evidence and a proposed split to the active agent.
+
 ## Establish evidence read-only
 
 1. Read the root `AGENTS.md`, then only the files and policies needed for the

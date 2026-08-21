@@ -25,9 +25,9 @@ All notable changes to `SWE Harness` are recorded here.
 - Consent-based cleanup for integrated, handed-off, or deliberately abandoned
   local worktrees and branches, with preservation checks and a durable research
   findings archive.
-- Declared skill execution modes with automatic single-subagent delegation for
-  read-only investigation and candidate review, inline authoritative workflows,
-  and explicitly requested multi-agent orchestration.
+- Declared skill execution modes with non-recursive, bounded read-only
+  delegation for investigation and candidate review, inline authoritative
+  workflows, and explicitly requested mutating orchestration.
 - MIT licensing for open-source use, modification, and redistribution.
 
 ### Changed
