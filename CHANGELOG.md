@@ -4,25 +4,13 @@ All notable changes to `SWE Harness` are recorded here.
 
 ## Unreleased
 
+## 0.1.0 - 2026-08-21
+
 ### Added
 
 - Added explicit Track, Depends on, and Related to fields for live work cards,
   plus formal branch, worktree, dependency, and ownership metadata for parallel
   lanes.
-
-### Changed
-
-- Extended structural validation to enforce the complete card and lane schema,
-  live references, dependency cycles, canonical file ownership, and WIP limits.
-
-### Security
-
-- Reject symbolic-linked canonical tracking sources before reading card data.
-
-## 0.1.0 - 2026-08-21
-
-### Added
-
 - Repository-native project harness with intent-specific skills, intake queues,
   and Planning, In progress, and Reviewing boards.
 - Canonical workflow and card schema in `.agents/WORKFLOW.md`.
@@ -49,6 +37,8 @@ All notable changes to `SWE Harness` are recorded here.
 
 ### Changed
 
+- Extended structural validation to enforce the complete card and lane schema,
+  live references, dependency cycles, canonical file ownership, and WIP limits.
 - Made this repository, rather than a personal skill directory, authoritative
   for reusable harness content and behavior.
 - Made concise test output a cross-language default: successful paths stay
@@ -91,5 +81,6 @@ All notable changes to `SWE Harness` are recorded here.
 
 ### Security
 
+- Reject symbolic-linked canonical tracking sources before reading card data.
 - Added conflict blocking, project-edit preservation, symbolic-link and path
   traversal rejection, atomic replacement, and rollback coverage.
