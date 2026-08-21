@@ -5,6 +5,10 @@ description: Coordinate explicitly requested parallel engineering work across ag
 
 # Coordinate Parallel Work
 
+## Execution mode
+
+`orchestrate-explicit`
+
 ## Establish the coordination boundary
 
 1. Confirm that the user explicitly requested parallel work. Do not introduce

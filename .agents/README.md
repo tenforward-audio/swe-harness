@@ -19,7 +19,7 @@ template parity.
 | Durable abandoned research findings | [`RESEARCH.md`](RESEARCH.md) |
 | Desired plugin capabilities | [`PLUGINS.md`](PLUGINS.md) |
 | Reusable template parity | [`HARNESS.md`](HARNESS.md) |
-| Durable technical rationale | [`decisions/`](decisions/), beginning with [repository authority](decisions/0001-repository-authority.md) and [distribution](decisions/0002-distribution-and-reconciliation.md) |
+| Durable technical rationale | [`decisions/`](decisions/), including [repository authority](decisions/0001-repository-authority.md), [distribution](decisions/0002-distribution-and-reconciliation.md), and [skill execution modes](decisions/0003-skill-execution-modes.md) |
 | Delivered user-visible history | [`CHANGELOG.md`](../CHANGELOG.md) |
 
 ## Normal context
@@ -48,7 +48,10 @@ Repo-local skills under `skills/` separate intake capture, read-only
 investigation, filtered work listing and lifecycle management, confirmed
 end-to-end delivery, parallel-lane coordination, mutating development,
 candidate review, reviewed integration, local worktree cleanup, and release
-work. Load the narrowest matching skill; intake queues are not routine context.
+work. Each skill declares whether it runs inline, delegates one read-only
+subagent automatically, or orchestrates agents only after an explicit parallel
+request. Load the narrowest matching skill; intake queues are not routine
+context.
 
 Run `python3 scripts/check_harness.py` from the repository root after changing
 this structure. Run the tests after changing templates, reconciliation, or the

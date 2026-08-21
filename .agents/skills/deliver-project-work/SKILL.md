@@ -5,6 +5,10 @@ description: Take an explicitly selected recorded issue or feature from its curr
 
 # Deliver Project Work
 
+## Execution mode
+
+`inline`
+
 ## Confirm one execution plan
 
 1. Read the root `AGENTS.md`, the canonical

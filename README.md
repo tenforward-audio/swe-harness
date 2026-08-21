@@ -40,6 +40,13 @@ name several tracked issues or features, Codex asks which identifier should be
 the parent and leaves the others where they are instead of silently combining
 cards. Integration remains a separate, explicitly approved step.
 
+Skills declare how they use agent context. Investigation and candidate review
+automatically run in one bounded read-only subagent when that capability is
+available, keeping detailed evidence gathering out of the main conversation's
+context. Canonical-state changes and other mutating workflows remain with the
+active agent. Multi-agent implementation still starts only when you explicitly
+request parallel work.
+
 ## Workflow
 
 The file containing a card is its status, so there is never a second status
@@ -75,6 +82,8 @@ The full lifecycle is defined in [`.agents/WORKFLOW.md`](.agents/WORKFLOW.md).
 - A root [`AGENTS.md`](AGENTS.md) that routes each request to one focused skill.
 - Repository-local skills for intake, investigation, implementation, review,
   integration, parallel work, and releases.
+- Declared skill execution modes for inline work, automatic read-only
+  delegation, and explicitly requested orchestration.
 - Markdown queues and Planning, In progress, and Reviewing boards.
 - Engineering, dependency, security, plugin, versioning, and contribution
   policy under [`.agents/`](.agents/).
@@ -135,6 +144,8 @@ The generated `dist/swe-harness/` directory is intentionally untracked.
 [ADR 0001](.agents/decisions/0001-repository-authority.md) explains repository
 authority. [ADR 0002](.agents/decisions/0002-distribution-and-reconciliation.md)
 explains distribution and safe reconciliation.
+[ADR 0003](.agents/decisions/0003-skill-execution-modes.md) defines inline,
+delegated read-only, and explicitly orchestrated skill execution.
 
 ## Develop and validate
 

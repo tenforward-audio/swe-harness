@@ -5,6 +5,10 @@ description: Technically review a defined candidate commit, branch, worktree, or
 
 # Review a Project Change
 
+## Execution mode
+
+`delegate-readonly`
+
 ## Pin the review target
 
 1. Read the root `AGENTS.md`, relevant policies, owning implementation, and

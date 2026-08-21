@@ -5,6 +5,10 @@ description: Plan, prepare, review, version, document, tag, or publish this proj
 
 # Release the Project
 
+## Execution mode
+
+`inline`
+
 ## Establish release scope
 
 1. Read [the versioning policy](../../VERSIONING.md) and relevant Unreleased

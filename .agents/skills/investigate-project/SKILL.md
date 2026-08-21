@@ -5,6 +5,10 @@ description: Answer, explain, diagnose, research, compare, plan, or audit this p
 
 # Investigate the Project
 
+## Execution mode
+
+`delegate-readonly`
+
 ## Establish evidence read-only
 
 1. Read the root `AGENTS.md`, then only the files and policies needed for the

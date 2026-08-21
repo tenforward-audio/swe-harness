@@ -68,3 +68,70 @@ class ValidationTest(TestCase):
             self.assertTrue(
                 any("WIP limit exceeded" in finding.message for finding in findings)
             )
+
+    def test_reports_missing_execution_mode_in_canonical_skill(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            apply_plan(plan_init(bundle, target, default_answers(target)))
+            skill = target / ".agents/skills/investigate-project/SKILL.md"
+            skill.write_text(
+                skill.read_text(encoding="utf-8").replace(
+                    "## Execution mode\n\n`delegate-readonly`\n\n", ""
+                ),
+                encoding="utf-8",
+            )
+
+            findings = inspect_harness(target, bundle)
+
+            self.assertTrue(
+                any(
+                    "missing skill execution mode" in finding.message
+                    for finding in findings
+                )
+            )
+
+    def test_reports_unsupported_execution_mode_in_canonical_skill(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            apply_plan(plan_init(bundle, target, default_answers(target)))
+            skill = target / ".agents/skills/investigate-project/SKILL.md"
+            skill.write_text(
+                skill.read_text(encoding="utf-8").replace(
+                    "`delegate-readonly`", "`write-in-background`", 1
+                ),
+                encoding="utf-8",
+            )
+
+            findings = inspect_harness(target, bundle)
+
+            self.assertTrue(
+                any(
+                    "unsupported skill execution mode write-in-background"
+                    in finding.message
+                    for finding in findings
+                )
+            )
+
+    def test_allows_project_skill_without_execution_mode(self) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            apply_plan(plan_init(bundle, target, default_answers(target)))
+            skill = target / ".agents/skills/project-only/SKILL.md"
+            skill.parent.mkdir()
+            skill.write_text(
+                "---\nname: project-only\ndescription: Local project workflow.\n---\n",
+                encoding="utf-8",
+            )
+
+            findings = inspect_harness(target, bundle)
+
+            self.assertFalse(
+                [
+                    finding
+                    for finding in findings
+                    if finding.severity == "ERROR" and "project-only" in finding.message
+                ]
+            )

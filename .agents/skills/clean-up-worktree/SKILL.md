@@ -5,6 +5,10 @@ description: Safely remove an explicitly named local Git worktree and optionally
 
 # Clean Up a Worktree
 
+## Execution mode
+
+`inline`
+
 ## Confirm the exact local cleanup
 
 1. Read the root `AGENTS.md`, the

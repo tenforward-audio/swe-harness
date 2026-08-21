@@ -5,6 +5,10 @@ description: List open tickets or review items, summarise status, apply planning
 
 # Manage Project Work
 
+## Execution mode
+
+`inline`
+
 Read [`../../WORKFLOW.md`](../../WORKFLOW.md) before changing tracked state. It
 is the canonical source for card fields, statuses, and transition checks; this
 skill owns the procedure for applying them.

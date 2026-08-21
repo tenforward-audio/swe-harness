@@ -5,6 +5,10 @@ description: "Record a message explicitly framed as a support ticket or feature 
 
 # Capture Project Intake
 
+## Execution mode
+
+`inline`
+
 [`../../WORKFLOW.md`](../../WORKFLOW.md) is the canonical lifecycle, identifier,
 and record-shape contract. This skill owns capture behavior only.
 

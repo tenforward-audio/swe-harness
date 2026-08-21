@@ -46,4 +46,7 @@ Repo-local skills under `skills/` separate intake capture, read-only
 investigation, filtered work listing and lifecycle management, confirmed
 end-to-end delivery, parallel-lane coordination, mutating development,
 candidate review, reviewed integration, local worktree cleanup, and release
-work. Load the narrowest matching skill; intake queues are not routine context.
+work. Each skill declares whether it runs inline, delegates one read-only
+subagent automatically, or orchestrates agents only after an explicit parallel
+request. Load the narrowest matching skill; intake queues are not routine
+context.

@@ -78,6 +78,37 @@ class InstallTest(TestCase):
             self.assertIn("clean-up-worktree", integration)
             self.assertIn("knowledge archive", research)
 
+    def test_default_template_installs_declared_skill_execution_modes(
+        self,
+    ) -> None:
+        with TemporaryDirectory() as directory:
+            target = Path(directory)
+            bundle = TemplateBundle(default_template_root())
+            apply_plan(plan_init(bundle, target, default_answers(target)))
+
+            expected_modes = {
+                "capture-project-intake": "inline",
+                "clean-up-worktree": "inline",
+                "coordinate-parallel-work": "orchestrate-explicit",
+                "deliver-project-work": "inline",
+                "develop-project": "inline",
+                "integrate-reviewed-change": "inline",
+                "investigate-project": "delegate-readonly",
+                "manage-project-work": "inline",
+                "release-project": "inline",
+                "review-project-change": "delegate-readonly",
+            }
+            for name, mode in expected_modes.items():
+                skill = (
+                    target / f".agents/skills/{name}/SKILL.md"
+                ).read_text(encoding="utf-8")
+                self.assertIn("## Execution mode", skill)
+                self.assertIn(f"`{mode}`", skill)
+
+            agents = (target / "AGENTS.md").read_text(encoding="utf-8")
+            self.assertIn("automatically dispatches exactly one bounded", agents)
+            self.assertIn("continue inline and disclose", agents)
+
     def test_readme_examples_match_workflow_vocabulary_and_states(
         self,
     ) -> None:

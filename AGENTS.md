@@ -109,6 +109,28 @@ Load only the skill and references relevant to the current task.
 implementation, it uses `coordinate-parallel-work` while each mutating lane
 follows `develop-project`.
 
+### Skill execution modes
+
+Every routed project skill declares one execution mode immediately after its
+title:
+
+- `inline`: the active agent performs the workflow in the current context.
+- `delegate-readonly`: after reading the skill and its required project
+  instructions, the active agent automatically dispatches exactly one bounded
+  read-only subagent when subagents are available. Direct it to follow the same
+  skill, and give it only the user question, repository location, scope,
+  constraints, and required evidence rather than unrelated conversation
+  history. The active agent then checks and synthesises the returned evidence
+  without repeating the full investigation.
+- `orchestrate-explicit`: dispatch is allowed only after the user explicitly
+  requests parallel work. Follow the skill's lane, ownership, and isolation
+  rules before creating agents or worktrees.
+
+If a read-only subagent is unavailable or fails, continue inline and disclose
+the fallback. Delegation never broadens mutation, approval, lifecycle, branch,
+worktree, integration, remote, or release authority. A subagent report is
+evidence for the active agent, not independent authority to act.
+
 ### Skill use response
 
 When a routed project skill is selected, begin the first progress update with:

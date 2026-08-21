@@ -5,6 +5,10 @@ description: Integrate an already reviewed candidate into the coordinating check
 
 # Integrate a Reviewed Change
 
+## Execution mode
+
+`inline`
+
 ## Confirm authority and reviewed identity
 
 1. Require an explicit user request to integrate or merge. Review completion or

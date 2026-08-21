@@ -28,6 +28,12 @@ MARKDOWN_LINK_PATTERN = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 SKILL_NAME_PATTERN = re.compile(
     r"\A---\s*\n.*?^name:\s*([^\s]+)\s*$", re.MULTILINE | re.DOTALL
 )
+SKILL_EXECUTION_MODE_PATTERN = re.compile(
+    r"^## Execution mode\s*$\n\s*`([^`\n]+)`\s*$", re.MULTILINE
+)
+SKILL_EXECUTION_MODES = frozenset(
+    {"inline", "delegate-readonly", "orchestrate-explicit"}
+)
 
 
 @dataclass(frozen=True)
@@ -118,14 +124,34 @@ def inspect_harness(
     skills_dir = resolved_root / ".agents/skills"
     if skills_dir.exists():
         for path in sorted(skills_dir.glob("*/SKILL.md")):
-            match = SKILL_NAME_PATTERN.search(path.read_text(encoding="utf-8"))
+            text = path.read_text(encoding="utf-8")
+            match = SKILL_NAME_PATTERN.search(text)
             relative = path.relative_to(resolved_root).as_posix()
             if not match:
                 findings.append(
                     Finding("ERROR", f"missing skill name frontmatter: {relative}")
                 )
-                continue
-            names.setdefault(match.group(1), []).append(relative)
+            else:
+                names.setdefault(match.group(1), []).append(relative)
+
+            if Path(relative) in required:
+                execution_modes = SKILL_EXECUTION_MODE_PATTERN.findall(text)
+                if not execution_modes:
+                    findings.append(
+                        Finding("ERROR", f"missing skill execution mode: {relative}")
+                    )
+                elif len(execution_modes) > 1:
+                    findings.append(
+                        Finding("ERROR", f"duplicate skill execution mode: {relative}")
+                    )
+                elif execution_modes[0] not in SKILL_EXECUTION_MODES:
+                    findings.append(
+                        Finding(
+                            "ERROR",
+                            f"unsupported skill execution mode "
+                            f"{execution_modes[0]}: {relative}",
+                        )
+                    )
     for name, paths in sorted(names.items()):
         if len(paths) > 1:
             findings.append(

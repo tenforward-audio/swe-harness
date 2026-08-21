@@ -5,6 +5,10 @@ description: Implement, fix, refactor, test, or change dependencies after the us
 
 # Develop the Project
 
+## Execution mode
+
+`inline`
+
 For a recorded issue or feature, require an In progress parent card or an
 assigned implementation lane. Route a request to work on, start, or implement
 an item still in intake or Planning through
