@@ -86,6 +86,9 @@ missing project setup and ask only when the current task depends on it.
   [capture intake](.agents/skills/capture-project-intake/SKILL.md), then stop.
 - Answer, diagnose, research, compare, plan, or audit:
   [investigate read-only](.agents/skills/investigate-project/SKILL.md).
+- Preserve skipped, deferred, or multi-session planning unknowns, or revisit a
+  named planning map or question:
+  [map project planning](.agents/skills/map-project-planning/SKILL.md).
 - Work on, start, or implement a selected recorded issue or feature from its
   current state through confirmation, checks, and Reviewing:
   [deliver project work](.agents/skills/deliver-project-work/SKILL.md).
@@ -163,8 +166,12 @@ action-focused line. Omit this update when no project skill is selected.
 
 - [The workflow contract](.agents/WORKFLOW.md) is the only source for card
   fields and lifecycle transitions.
-- Intake queues and status boards own live state. Load only the relevant source
-  unless the user requests an overview or migration.
+- [Active planning maps](.agents/planning/ACTIVE.md) and the
+  [planning ledger](.agents/planning/LEDGER.md) preserve precise unknowns, fog,
+  dependencies, and resolutions upstream of delivery work.
+- Planning maps, delivery intake queues, and status boards own their respective
+  live state. Load only the relevant source unless the user requests an
+  overview or migration.
 - [The research archive](.agents/RESEARCH.md) retains material findings from
   abandoned planning or research; it never owns live status.
 

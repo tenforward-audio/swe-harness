@@ -35,6 +35,7 @@ class InstallTest(TestCase):
                 "coordinate-parallel-work",
                 "deliver-project-work",
                 "integrate-reviewed-change",
+                "map-project-planning",
                 "review-project-change",
             )
             agents = (target / "AGENTS.md").read_text(encoding="utf-8")
@@ -73,10 +74,25 @@ class InstallTest(TestCase):
                 target / ".agents/skills/integrate-reviewed-change/SKILL.md"
             ).read_text(encoding="utf-8")
             research = (target / ".agents/RESEARCH.md").read_text(encoding="utf-8")
+            active_maps = (target / ".agents/planning/ACTIVE.md").read_text(
+                encoding="utf-8"
+            )
+            planning_ledger = (target / ".agents/planning/LEDGER.md").read_text(
+                encoding="utf-8"
+            )
+            mapping = (
+                target / ".agents/skills/map-project-planning/SKILL.md"
+            ).read_text(encoding="utf-8")
             self.assertIn("remote branch deletion", cleanup)
             self.assertIn("independent durable reference", cleanup)
             self.assertIn("clean-up-worktree", integration)
             self.assertIn("knowledge archive", research)
+            self.assertIn("Next map: `MAP-001`", active_maps)
+            self.assertIn("Next question: `QUESTION-001`", active_maps)
+            self.assertIn("permanently retains resolved", planning_ledger)
+            self.assertIn("Do not invoke or imitate", mapping)
+            self.assertIn("Planning ledger handoff", mapping)
+            self.assertIn("For `map-only`, stop after persistence", mapping)
 
     def test_default_template_installs_declared_skill_execution_modes(
         self,
@@ -94,6 +110,7 @@ class InstallTest(TestCase):
                 "develop-project": "inline",
                 "integrate-reviewed-change": "inline",
                 "investigate-project": "delegate-readonly",
+                "map-project-planning": "inline",
                 "manage-project-work": "inline",
                 "release-project": "inline",
                 "review-project-change": "delegate-readonly",
@@ -135,6 +152,8 @@ class InstallTest(TestCase):
         self.assertNotIn("FEATURE-001 and FEATURE-002 in parallel", readme)
         self.assertIn("Accepts an item from Reviewing", readme)
         self.assertIn("Codex stops there until you accept", readme)
+        self.assertIn("Skip that question and record it for later", readme)
+        self.assertIn("Plan mode itself is read-only", readme)
 
     def test_fresh_install_is_complete_and_idempotent(self) -> None:
         with TemporaryDirectory() as directory:

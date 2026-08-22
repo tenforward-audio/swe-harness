@@ -21,6 +21,7 @@ FIELD_LINE = re.compile(r"^- ([A-Za-z][^:]*):(?:\s*(.*))?$")
 LANE_LINE = re.compile(r"^  - Lane:\s*`?([a-z0-9][a-z0-9-]*)`?\s*$")
 LANE_FIELD_LINE = re.compile(r"^    - ([A-Za-z][^:]*):(?:\s*(.*))?$")
 TRACKED_ID = re.compile(r"^(?:ISSUE|FEATURE)-\d{3,}$")
+DEPENDENCY_ID = re.compile(r"^(?:ISSUE|FEATURE|QUESTION)-\d{3,}$")
 
 ISSUE_INTAKE_FIELDS = frozenset(
     {
@@ -90,7 +91,9 @@ class _Card:
     lanes: list[_Lane]
 
 
-def inspect_work_cards(root: Path) -> tuple[WorkCardFinding, ...]:
+def inspect_work_cards(
+    root: Path, *, active_question_ids: frozenset[str] = frozenset()
+) -> tuple[WorkCardFinding, ...]:
     """Return structural findings for the five canonical live tracking files."""
 
     resolved_root = root.resolve()
@@ -158,8 +161,10 @@ def inspect_work_cards(root: Path) -> tuple[WorkCardFinding, ...]:
             )
         )
 
-    dependencies = _validate_references(cards, findings)
-    _validate_dependency_cycles(cards, dependencies, findings)
+    dependencies = _validate_references(cards, active_question_ids, findings)
+    _validate_dependency_cycles(
+        cards, dependencies, findings, external_ids=active_question_ids
+    )
     return tuple(findings)
 
 
@@ -379,7 +384,9 @@ def _validate_card(card: _Card, findings: list[WorkCardFinding]) -> None:
 
 
 def _validate_references(
-    cards: list[_Card], findings: list[WorkCardFinding]
+    cards: list[_Card],
+    active_question_ids: frozenset[str],
+    findings: list[WorkCardFinding],
 ) -> tuple[tuple[str, str], ...]:
     card_ids = {card.identifier for card in cards}
     dependencies: list[tuple[str, str]] = []
@@ -387,7 +394,10 @@ def _validate_references(
     for card in cards:
         for field_name in ("Depends on", "Related to"):
             for reference in _references(card.fields.get(field_name)):
-                if not TRACKED_ID.fullmatch(reference):
+                allowed_pattern = (
+                    DEPENDENCY_ID if field_name == "Depends on" else TRACKED_ID
+                )
+                if not allowed_pattern.fullmatch(reference):
                     findings.append(
                         WorkCardFinding(
                             "ERROR",
@@ -406,7 +416,18 @@ def _validate_references(
                         )
                     )
                     continue
-                if reference not in card_ids:
+                if reference.startswith("QUESTION-"):
+                    if reference not in active_question_ids:
+                        findings.append(
+                            WorkCardFinding(
+                                "ERROR",
+                                f"{card.identifier} references missing active "
+                                f"planning question {reference}",
+                                f"{card.source}:{card.line}",
+                            )
+                        )
+                        continue
+                elif reference not in card_ids:
                     findings.append(
                         WorkCardFinding(
                             "ERROR",
@@ -451,8 +472,11 @@ def _validate_dependency_cycles(
     cards: list[_Card],
     dependencies: tuple[tuple[str, str], ...],
     findings: list[WorkCardFinding],
+    *,
+    external_ids: frozenset[str] = frozenset(),
 ) -> None:
     identifiers = {card.identifier for card in cards}
+    identifiers.update(external_ids)
     identifiers.update(
         f"{card.identifier}#{lane.lane_id}" for card in cards for lane in card.lanes
     )

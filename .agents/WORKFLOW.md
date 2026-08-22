@@ -7,7 +7,7 @@ contain live state only and must not redefine this contract.
 
 ## Authority rules
 
-- A tracked identifier appears in exactly one queue or status board.
+- A delivery identifier appears in exactly one intake queue or status board.
 - A card's containing file is its status. Do not add a separate status field.
 - Move an item; never copy it between lifecycle files.
 - Intake order is not priority. Planning order expresses the chosen sequence.
@@ -18,6 +18,72 @@ contain live state only and must not redefine this contract.
   card, current documentation, or an ADR.
 - External trackers and plugins may display or transport work, but these files
   remain canonical unless an ADR explicitly changes that boundary.
+
+## Planning maps
+
+Planning maps preserve an idea whose implementation route is not yet clear.
+They live upstream of delivery intake and use two canonical sources:
+
+- [`planning/ACTIVE.md`](planning/ACTIVE.md) owns active maps, open questions,
+  fog, and the next map, question, and fog identifiers.
+- [`planning/LEDGER.md`](planning/LEDGER.md) permanently owns resolved questions
+  and concluded maps. It is durable context, not live work state.
+
+Use native Codex Plan mode for the conversation. Because Plan mode is read-only,
+maintain a provisional ledger handoff there and apply it only after Plan mode
+ends. A precise unanswered point is a question; an in-scope concern that cannot
+yet be phrased precisely is fog. Do not create a placeholder question merely to
+empty the fog list.
+
+Active maps use this shape:
+
+```markdown
+### MAP-001 — Short destination
+
+- Source: User request or durable source link
+- Destination: Observable definition of a cleared planning route
+- Scope: Included boundaries
+- Notes: Fixed preferences or domain context, or `None`
+- Fog:
+  - FOG-001 — In-scope concern not yet precise enough to ask
+- Out of scope: Explicit exclusions, or `None`
+- Resolved questions: Comma-separated resolved identifiers, or `None`
+- Next action: One frontier, revisit, or conclusion action
+```
+
+Open questions use this shape:
+
+```markdown
+### QUESTION-001 — Short question
+
+- Map: MAP-001
+- Kind: decision | research | experiment | enabling-task
+- Question: One precise unanswered question
+- Why it matters: The downstream choice or outcome affected
+- Answerable by: user | agent | either
+- Origin: FOG-001, or `None`
+- Depends on: Comma-separated question identifiers, or `None`
+- Related to: Comma-separated question identifiers, or `None`
+- Revisit when: `Now` or one concrete trigger
+- Next action: One resolution action
+```
+
+Resolved questions move to the ledger, retain the common fields, and replace
+`Revisit when` and `Next action` with `Resolution`, `Rationale`, `Evidence`,
+`Resolved`, and `Informs`. Concluded maps move to the ledger and add `Outcome`
+and `Concluded`. Do not duplicate ADR or abandoned-research detail: retain a
+summary and canonical pointer.
+
+`Depends on` is the only authored blocking direction. A question is on the
+frontier when it is open, has `Revisit when: Now`, and has no open prerequisite.
+A future revisit trigger makes it deferred; an open prerequisite makes it
+blocked. Reverse `blocks` relationships are always derived. Question dependency
+history remains in the ledger after resolution.
+
+Maps conclude only after their open questions and fog are cleared, or after an
+explicit abandonment or destination redraw. Identifiers come only from the
+counters in `ACTIVE.md` and are never reused. Plan-mode provisional handles do
+not reserve identifiers.
 
 ## Lifecycle
 
@@ -121,11 +187,13 @@ with this card. Omit only fields explicitly marked optional.
 ```
 
 `Depends on` is directed: every identifier names a live prerequisite of the
-current card. `Related to` is undirected and needs to be recorded on only one of
-the related cards. References must name another identifier that exists in one
-canonical live queue or board. Remove a dependency after its prerequisite is
-accepted and leaves live state; never keep a dangling reference or dependency
-cycle.
+current card. It may name another live delivery card or an open `QUESTION-*`
+record. `Related to` is undirected and needs to be recorded on only one of the
+related cards; it continues to name live delivery cards only. Remove a delivery
+dependency after its prerequisite is accepted, and remove a question dependency
+in the same tracking change that resolves that question. Never keep a dangling
+reference or dependency cycle. Use a map as `Source` when durable planning
+context must remain available after live dependency removal.
 
 An In progress card may add parallel ownership using this exact shape. Lane
 identifiers are stable lower-case slugs scoped to their parent card. Lane

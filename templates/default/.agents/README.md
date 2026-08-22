@@ -12,6 +12,8 @@ checksums used only for safe reconciliation.
 | --- | --- |
 | Product contract, safety, and intent routing | [`AGENTS.md`](../AGENTS.md) |
 | Card schema and lifecycle | [`WORKFLOW.md`](WORKFLOW.md) |
+| Active planning maps and questions | [`planning/ACTIVE.md`](planning/ACTIVE.md) |
+| Durable planning resolutions | [`planning/LEDGER.md`](planning/LEDGER.md) |
 | Unselected work | [`ISSUES.md`](ISSUES.md) and [`FEATURES.md`](FEATURES.md) |
 | Selected work status | [`workboard/`](workboard/) |
 | Durable abandoned research findings | [`RESEARCH.md`](RESEARCH.md) |
@@ -30,6 +32,9 @@ checksums used only for safe reconciliation.
 - [Planning](workboard/PLANNING.md),
   [in progress](workboard/IN_PROGRESS.md), and
   [reviewing](workboard/REVIEWING.md): selected work split by status.
+- [Active planning maps](planning/ACTIVE.md) and the
+  [planning ledger](planning/LEDGER.md): pre-delivery unknowns, fog,
+  dependencies, and durable resolutions.
 - [Workflow](WORKFLOW.md): the canonical card schema and lifecycle transitions.
 - [Plugins](PLUGINS.md): desired capabilities and external authority limits.
 - [Contributing](CONTRIBUTING.md): change and checkpoint workflow.
@@ -43,7 +48,8 @@ checksums used only for safe reconciliation.
 - [Decisions](decisions/0000-template.md): ADR template for durable choices.
 
 Repo-local skills under `skills/` separate intake capture, read-only
-investigation, filtered work listing and lifecycle management, confirmed
+investigation, planning-map preservation, filtered work listing and lifecycle
+management, confirmed
 end-to-end delivery, parallel-lane coordination, mutating development,
 candidate review, reviewed integration, local worktree cleanup, and release
 work. Each skill declares whether it runs inline, delegates bounded read-only

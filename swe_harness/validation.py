@@ -8,6 +8,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 from .install import MANIFEST_PATH, destination_safety_error, read_manifest, sha256
+from .planning_records import index_planning_records
 from .template import PLACEHOLDER_PATTERN, TemplateBundle
 from .work_cards import inspect_work_cards
 
@@ -83,9 +84,15 @@ def inspect_harness(
                     Finding("ERROR", f"broken link in {relative}: {raw_target}")
                 )
 
+    planning = index_planning_records(resolved_root)
+    findings.extend(
+        Finding(item.severity, item.message) for item in planning.findings
+    )
     findings.extend(
         Finding(item.severity, item.message)
-        for item in inspect_work_cards(resolved_root)
+        for item in inspect_work_cards(
+            resolved_root, active_question_ids=planning.active_question_ids
+        )
     )
 
     names: dict[str, list[str]] = {}

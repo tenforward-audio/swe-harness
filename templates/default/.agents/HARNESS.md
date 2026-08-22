@@ -1,6 +1,6 @@
 # Harness state
 
-- Template revision: `2026-08-21.4`
+- Template revision: `2026-08-22.1`
 - Installed from: `swe-harness`
 
 This marker identifies the reusable template behavior installed in this

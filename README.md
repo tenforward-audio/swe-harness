@@ -25,6 +25,8 @@ the useful context survives long after the conversation ends.
 | --- | --- |
 | `Support ticket: checkout fails after applying a discount` | Records an issue for later |
 | `Feature request: add an order history page` | Captures the idea without starting implementation |
+| `Skip that question and record it for later` | Preserves it on a planning map with inferred dependencies |
+| `Show me the frontier for MAP-001` | Lists precise questions that are ready to resolve now |
 | `Show me the open tickets` | Lists open issues across intake and active boards |
 | `Show me the open work` | Lists open issues and feature ideas in every live state |
 | `Work on ISSUE-001` | Confirms the plan, implements it, checks it, and hands it over for review |
@@ -49,7 +51,18 @@ outcome. Integration is still a separate decision.
 
 ## A lightweight workflow
 
-`Capture → Plan → Build → Review → Accept`
+`Map uncertainty → Capture → Plan → Build → Review → Accept`
+
+Planning maps sit before delivery intake when an idea is still fuzzy. Native
+Codex Plan mode remains the conversation: saying “skip”, “defer”, or “I don't
+know yet” preserves a precise question for later without continuing to press
+for an answer. Questions declare prerequisites, while concerns that cannot yet
+be phrased precisely remain fog. Ready, blocked, and deferred views are derived
+from those records rather than maintained separately.
+
+Plan mode itself is read-only, so Codex maintains a visible ledger handoff while
+you plan and persists it as the first validated action after Plan mode ends.
+Resolved questions and completed maps remain in the repository planning ledger.
 
 There is no completed-work graveyard to maintain. Accepted results live where
 they are useful: in Git history, documentation, the changelog, or a decision
@@ -59,8 +72,9 @@ entirely.
 The repository remains canonical throughout. Local agent state and external
 trackers can help with the work, but they never silently replace project policy
 or cards. Cards can declare tracks, live dependencies, relationships, and
-formal parallel lanes without introducing another tracker. The full lifecycle
-lives in [`.agents/WORKFLOW.md`](.agents/WORKFLOW.md).
+formal parallel lanes without introducing another tracker. Delivery cards may
+also wait on an open planning question. The full workflow lives in
+[`.agents/WORKFLOW.md`](.agents/WORKFLOW.md).
 
 ## Install
 

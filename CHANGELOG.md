@@ -4,6 +4,18 @@ All notable changes to `SWE Harness` are recorded here.
 
 ## Unreleased
 
+### Added
+
+- Added repository-native planning maps, precise question records, durable
+  resolutions, fog notes, and derived frontier, blocked, and deferred semantics.
+- Added a Plan-mode mapping skill that treats skipped questions as deliberate
+  unknowns and persists its validated ledger handoff after Plan mode ends.
+
+### Changed
+
+- Extended structural validation and delivery-card dependencies to recognise
+  active planning questions without duplicating reverse blocker state.
+
 ## 0.1.0 - 2026-08-21
 
 ### Added

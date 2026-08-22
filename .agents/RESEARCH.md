@@ -8,7 +8,7 @@ project documentation.
 Record only findings likely to prevent repeated investigation or materially
 inform later work. Put a public project claim in the owning documentation and a
 consequential architectural choice in an ADR instead. Do not duplicate active
-card state here.
+card state, a planning question, or its durable ledger resolution here.
 
 ## Record shape
 
