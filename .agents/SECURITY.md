@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-The latest `0.1.x` release and the current repository state are supported.
+The latest `0.2.x` release and the current repository state are supported.
 
 ## Reporting a vulnerability
 
