@@ -9,11 +9,11 @@ from swe_harness.work_cards import inspect_work_cards
 
 
 class PlanningRecordValidationTest(TestCase):
-    def test_accepts_resolved_frontier_blocked_deferred_and_fog_records(self) -> None:
+    def test_accepts_resolved_frontier_blocked_deferred_and_gndn_records(self) -> None:
         with TemporaryDirectory() as directory:
             target = self._installed(Path(directory))
             (target / ".agents/planning/ACTIVE.md").write_text(
-                self._active_header("MAP-002", "QUESTION-004", "FOG-003")
+                self._active_header("MAP-002", "QUESTION-004", "GNDN-003")
                 + """
 ## Maps
 
@@ -23,8 +23,8 @@ class PlanningRecordValidationTest(TestCase):
 - Destination: An implementation-ready import contract
 - Scope: Import parsing and validation
 - Notes: Keep the format human-readable
-- Fog:
-  - FOG-002 — Recovery behavior may expose further questions
+- GNDN:
+  - GNDN-002 — Recovery behavior may expose further questions
 - Out of scope: User interface design
 - Resolved questions: QUESTION-001
 - Next action: Resolve QUESTION-002
@@ -51,7 +51,7 @@ class PlanningRecordValidationTest(TestCase):
 - Question: What recovery guarantee do current callers require?
 - Why it matters: It may constrain publication ordering.
 - Answerable by: agent
-- Origin: FOG-001
+- Origin: GNDN-001
 - Depends on: QUESTION-002
 - Related to: None
 - Revisit when: After QUESTION-002
@@ -101,11 +101,13 @@ No concluded planning maps.
                 frozenset({"QUESTION-001"}), index.resolved_question_ids
             )
 
-    def test_reports_missing_maps_cycles_duplicate_fog_and_stale_counters(self) -> None:
+    def test_reports_missing_maps_cycles_duplicate_gndn_and_stale_counters(
+        self,
+    ) -> None:
         with TemporaryDirectory() as directory:
             target = self._installed(Path(directory))
             (target / ".agents/planning/ACTIVE.md").write_text(
-                self._active_header("MAP-001", "QUESTION-002", "FOG-001")
+                self._active_header("MAP-001", "QUESTION-002", "GNDN-001")
                 + """
 ## Maps
 
@@ -115,9 +117,9 @@ No concluded planning maps.
 - Destination: Demonstrate invalid records
 - Scope: Validation
 - Notes: None
-- Fog:
-  - FOG-001 — First concern
-  - FOG-001 — Duplicate concern
+- GNDN:
+  - GNDN-001 — First concern
+  - GNDN-001 — Duplicate concern
 - Out of scope: None
 - Resolved questions: None
 - Next action: Repair records
@@ -144,7 +146,7 @@ No concluded planning maps.
 - Question: What comes second?
 - Why it matters: It forms a cycle.
 - Answerable by: agent
-- Origin: FOG-001
+- Origin: GNDN-001
 - Depends on: QUESTION-001
 - Related to: None
 - Revisit when: Now
@@ -157,11 +159,11 @@ No concluded planning maps.
                 finding.message for finding in index_planning_records(target).findings
             ]
 
-            self.assertIn("duplicate fog identifier FOG-001", messages)
+            self.assertIn("duplicate GNDN identifier GNDN-001", messages)
             self.assertIn("QUESTION-001 references missing map MAP-999", messages)
             self.assertIn("QUESTION-001 has malformed Origin bad-origin", messages)
             self.assertIn(
-                "QUESTION-002 origin FOG-001 remains active fog", messages
+                "QUESTION-002 origin GNDN-001 remains active GNDN", messages
             )
             self.assertTrue(
                 any("planning dependency cycle detected" in item for item in messages)
@@ -174,7 +176,7 @@ No concluded planning maps.
                 messages,
             )
             self.assertIn(
-                "Next fog counter FOG-001 would reuse an issued identifier", messages
+                "Next GNDN counter GNDN-001 would reuse an issued identifier", messages
             )
 
     def test_delivery_card_may_depend_only_on_an_active_question(self) -> None:
@@ -182,7 +184,7 @@ No concluded planning maps.
             target = self._installed(Path(directory))
             planning = target / ".agents/planning/ACTIVE.md"
             planning.write_text(
-                self._active_header("MAP-002", "QUESTION-002", "FOG-001")
+                self._active_header("MAP-002", "QUESTION-002", "GNDN-001")
                 + """
 ## Maps
 
@@ -192,7 +194,7 @@ No concluded planning maps.
 - Destination: One implementation-ready route
 - Scope: Delivery planning
 - Notes: None
-- Fog: None
+- GNDN: None
 - Out of scope: None
 - Resolved questions: None
 - Next action: Resolve QUESTION-001
@@ -240,7 +242,7 @@ No concluded planning maps.
         with TemporaryDirectory() as directory:
             target = self._installed(Path(directory))
             (target / ".agents/planning/ACTIVE.md").write_text(
-                self._active_header("MAP-002", "QUESTION-002", "FOG-001")
+                self._active_header("MAP-002", "QUESTION-002", "GNDN-001")
                 + """
 ## Maps
 
@@ -250,7 +252,7 @@ No concluded planning maps.
 - Destination: One indexed resolution
 - Scope: Planning records
 - Notes: None
-- Fog: None
+- GNDN: None
 - Out of scope: None
 - Resolved questions: None
 - Next action: Repair the index.
@@ -304,13 +306,13 @@ No concluded planning maps.
         return target
 
     @staticmethod
-    def _active_header(next_map: str, next_question: str, next_fog: str) -> str:
+    def _active_header(next_map: str, next_question: str, next_gndn: str) -> str:
         return f"""# Active planning maps
 
 - Updated: 2026-08-22
 - Next map: `{next_map}`
 - Next question: `{next_question}`
-- Next fog: `{next_fog}`
+- Next GNDN: `{next_gndn}`
 """
 
     @staticmethod

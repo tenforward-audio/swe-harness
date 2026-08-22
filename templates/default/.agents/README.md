@@ -33,7 +33,7 @@ checksums used only for safe reconciliation.
   [in progress](workboard/IN_PROGRESS.md), and
   [reviewing](workboard/REVIEWING.md): selected work split by status.
 - [Active planning maps](planning/ACTIVE.md) and the
-  [planning ledger](planning/LEDGER.md): pre-delivery unknowns, fog,
+  [planning ledger](planning/LEDGER.md): pre-delivery unknowns, GNDN notes,
   dependencies, and durable resolutions.
 - [Workflow](WORKFLOW.md): the canonical card schema and lifecycle transitions.
 - [Plugins](PLUGINS.md): desired capabilities and external authority limits.

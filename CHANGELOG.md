@@ -4,12 +4,17 @@ All notable changes to `SWE Harness` are recorded here.
 
 ## Unreleased
 
+### Changed
+
+- Standardised imprecise planning concerns on GNDN notes and `GNDN-*`
+  identifiers.
+
 ## 0.2.0 - 2026-08-22
 
 ### Added
 
 - Added repository-native planning records for precise questions, durable
-  resolutions, fog notes, and derived ready, blocked, and deferred states.
+  resolutions, GNDN notes, and derived ready, blocked, and deferred states.
 - Added a Plan-mode planning workflow that treats skipped questions as
   deliberate unknowns and persists its validated ledger handoff after Plan mode
   ends.

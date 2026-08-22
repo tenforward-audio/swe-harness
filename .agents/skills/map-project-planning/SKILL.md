@@ -1,6 +1,6 @@
 ---
 name: map-project-planning
-description: Preserve a fuzzy or multi-session planning effort as a repository-native map of precise questions, dependencies, deferred work, fog, and durable resolutions. Use when the user asks for a planning map, names a MAP-* or QUESTION-* record, or actively skips, defers, cannot answer, or wants to revisit a planning question later. Do not use grilling mode, implement the destination, or write repository state while native Plan mode is active.
+description: Preserve a fuzzy or multi-session planning effort as a repository-native map of precise questions, dependencies, deferred work, GNDN notes, and durable resolutions. Use when the user asks for a planning map, names a MAP-* or QUESTION-* record, or actively skips, defers, cannot answer, or wants to revisit a planning question later. Do not use grilling mode, implement the destination, or write repository state while native Plan mode is active.
 ---
 
 # Map Project Planning
@@ -21,8 +21,8 @@ and persistence procedure.
   yet”, and equivalent replies as deliberate planning decisions. Stop pursuing
   that question in the current conversation.
 - If the unknown can be phrased precisely now, add a provisional question. If
-  only the shape of a concern is visible, add a provisional fog note instead.
-  Never manufacture a precise question from fog merely to create a ticket.
+  only the shape of a concern is visible, add a provisional GNDN note instead.
+  Never manufacture a precise question from GNDN merely to create a ticket.
 - Infer `Kind`, `Answerable by`, dependencies, relationships, and a concrete
   revisit trigger from available evidence. State material inference briefly so
   the user can correct it; do not turn confirmation into another interview.
@@ -50,10 +50,10 @@ planning_ledger:
       answerable_by: user | agent | either
       depends_on: [Q2]
       related_to: []
-      origin: F1 | none
+      origin: G1 | none
       revisit_when: Now | concrete trigger
-  fog:
-    - ref: F1
+  gndn:
+    - ref: G1
       note: in-scope concern not yet precise enough to ask
   resolutions: []
 ```
@@ -86,7 +86,7 @@ When the user leaves Plan mode and authorises the proposed action:
 
 ## Revisit and resolve
 
-- Load an existing map at low resolution first: destination, scope, fog,
+- Load an existing map at low resolution first: destination, scope, GNDN,
   resolved pointers, and the derived frontier. Open full question or resolution
   detail only when it can affect the current planning decision.
 - The frontier is every open question with `Revisit when: Now` and no open
@@ -96,12 +96,12 @@ When the user leaves Plan mode and authorises the proposed action:
   A resolution handoff moves the complete question to `LEDGER.md`, records its
   answer, rationale, evidence, date, and informed artifact, and removes any live
   delivery-card dependency on it in the same patch.
-- When a resolution sharpens fog, remove that fog entry and create a question
-  whose `Origin` retains the fog identifier. Git history preserves the former
-  fog text.
+- When a resolution sharpens GNDN, remove that GNDN entry and create a question
+  whose `Origin` retains the GNDN identifier. Git history preserves the former
+  GNDN text.
 - Keep a consequential architectural decision in an ADR and a material finding
   from deliberately abandoned research in `RESEARCH.md`; the planning ledger
   retains only the summary and canonical pointer rather than duplicate detail.
-- Conclude a map only when it has no open child questions or fog, or when the
-  user explicitly abandons or redraws its destination. Move concluded maps to
-  the ledger; never infer abandonment from inactivity.
+- Conclude a map only when it has no open child questions or GNDN notes, or
+  when the user explicitly abandons or redraws its destination. Move concluded
+  maps to the ledger; never infer abandonment from inactivity.

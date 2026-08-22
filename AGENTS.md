@@ -167,8 +167,8 @@ action-focused line. Omit this update when no project skill is selected.
 - [The workflow contract](.agents/WORKFLOW.md) is the only source for card
   fields and lifecycle transitions.
 - [Active planning maps](.agents/planning/ACTIVE.md) and the
-  [planning ledger](.agents/planning/LEDGER.md) preserve precise unknowns, fog,
-  dependencies, and resolutions upstream of delivery work.
+  [planning ledger](.agents/planning/LEDGER.md) preserve precise unknowns, GNDN
+  notes, dependencies, and resolutions upstream of delivery work.
 - Planning maps, delivery intake queues, and status boards own their respective
   live state. Load only the relevant source unless the user requests an
   overview or migration.

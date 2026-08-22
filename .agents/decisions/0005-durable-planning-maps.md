@@ -28,11 +28,11 @@ answer yet without losing them when the conversation ends.
 
 ## Decision
 
-Use separate `MAP-*`, `QUESTION-*`, and `FOG-*` records in canonical Markdown.
+Use separate `MAP-*`, `QUESTION-*`, and `GNDN-*` records in canonical Markdown.
 Precise unanswered points become questions; concerns that cannot yet be phrased
-precisely remain fog. Questions author directed `Depends on` edges, while
-reverse blockers and the ready frontier are derived. Resolved questions and
-concluded maps move to a permanent ledger.
+precisely remain GNDN ("goes nowhere, does nothing"). Questions author directed
+`Depends on` edges, while reverse blockers and the ready frontier are derived.
+Resolved questions and concluded maps move to a permanent ledger.
 
 Native Plan mode maintains a provisional, user-visible ledger handoff without
 writing files. After Plan mode ends, the mapping workflow allocates current
@@ -51,11 +51,11 @@ question resolves. A map remains the durable source pointer afterward.
   read-only visualisation without making visualisation part of this change.
 - The planning ledger adds a second record family, but it stays upstream of and
   semantically distinct from delivery work.
-- Installed generic harnesses advance to template revision `2026-08-22.1`.
+- Installed generic harnesses advance to template revision `2026-08-22.2`.
 
 ## Reversal conditions
 
 Reconsider the separate record family if a concrete consumer demonstrates that
 one universal ticket lifecycle is simpler without weakening delivery readiness
-or durable history. Any replacement must preserve skipped unknowns, fog,
+or durable history. Any replacement must preserve skipped unknowns, GNDN notes,
 dependency direction, Plan-mode read-only behavior, and repository authority.

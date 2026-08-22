@@ -7,7 +7,7 @@ All notable changes to `{{PROJECT_NAME}}` are recorded here.
 ### Added
 
 - Repository-native planning maps, precise question records, durable
-  resolutions, fog notes, and a Plan-mode ledger handoff workflow.
+  resolutions, GNDN notes, and a Plan-mode ledger handoff workflow.
 - Track, dependency, relationship, and formal parallel-lane fields for live work
   cards.
 

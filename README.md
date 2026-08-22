@@ -57,7 +57,8 @@ Planning maps sit before delivery intake when an idea is still fuzzy. Native
 Codex Plan mode remains the conversation: saying “skip”, “defer”, or “I don't
 know yet” preserves a precise question for later without continuing to press
 for an answer. Questions declare prerequisites, while concerns that cannot yet
-be phrased precisely remain fog. Ready, blocked, and deferred views are derived
+be phrased precisely remain GNDN—"goes nowhere, does nothing". Ready, blocked,
+and deferred views are derived
 from those records rather than maintained separately.
 
 Plan mode itself is read-only, so Codex maintains a visible ledger handoff while

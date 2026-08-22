@@ -25,15 +25,15 @@ Planning maps preserve an idea whose implementation route is not yet clear.
 They live upstream of delivery intake and use two canonical sources:
 
 - [`planning/ACTIVE.md`](planning/ACTIVE.md) owns active maps, open questions,
-  fog, and the next map, question, and fog identifiers.
+  GNDN notes, and the next map, question, and GNDN identifiers.
 - [`planning/LEDGER.md`](planning/LEDGER.md) permanently owns resolved questions
   and concluded maps. It is durable context, not live work state.
 
 Use native Codex Plan mode for the conversation. Because Plan mode is read-only,
 maintain a provisional ledger handoff there and apply it only after Plan mode
 ends. A precise unanswered point is a question; an in-scope concern that cannot
-yet be phrased precisely is fog. Do not create a placeholder question merely to
-empty the fog list.
+yet be phrased precisely is GNDN ("goes nowhere, does nothing"). Do not create a
+placeholder question merely to empty the GNDN list.
 
 Active maps use this shape:
 
@@ -44,8 +44,8 @@ Active maps use this shape:
 - Destination: Observable definition of a cleared planning route
 - Scope: Included boundaries
 - Notes: Fixed preferences or domain context, or `None`
-- Fog:
-  - FOG-001 — In-scope concern not yet precise enough to ask
+- GNDN:
+  - GNDN-001 — In-scope concern not yet precise enough to ask
 - Out of scope: Explicit exclusions, or `None`
 - Resolved questions: Comma-separated resolved identifiers, or `None`
 - Next action: One frontier, revisit, or conclusion action
@@ -61,7 +61,7 @@ Open questions use this shape:
 - Question: One precise unanswered question
 - Why it matters: The downstream choice or outcome affected
 - Answerable by: user | agent | either
-- Origin: FOG-001, or `None`
+- Origin: GNDN-001, or `None`
 - Depends on: Comma-separated question identifiers, or `None`
 - Related to: Comma-separated question identifiers, or `None`
 - Revisit when: `Now` or one concrete trigger
@@ -80,10 +80,10 @@ A future revisit trigger makes it deferred; an open prerequisite makes it
 blocked. Reverse `blocks` relationships are always derived. Question dependency
 history remains in the ledger after resolution.
 
-Maps conclude only after their open questions and fog are cleared, or after an
-explicit abandonment or destination redraw. Identifiers come only from the
-counters in `ACTIVE.md` and are never reused. Plan-mode provisional handles do
-not reserve identifiers.
+Maps conclude only after their open questions and GNDN notes are cleared, or
+after an explicit abandonment or destination redraw. Identifiers come only
+from the counters in `ACTIVE.md` and are never reused. Plan-mode provisional
+handles do not reserve identifiers.
 
 ## Lifecycle
 

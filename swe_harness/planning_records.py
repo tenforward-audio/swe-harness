@@ -1,4 +1,4 @@
-"""Validate durable planning maps, questions, fog, and resolutions."""
+"""Validate durable planning maps, questions, GNDN notes, and resolutions."""
 
 from __future__ import annotations
 
@@ -15,10 +15,10 @@ RECORD_HEADING = re.compile(
 FIELD_LINE = re.compile(r"^- ([A-Za-z][^:]*):(?:\s*(.*))?$")
 MAP_ID = re.compile(r"^MAP-(\d{3,})$")
 QUESTION_ID = re.compile(r"^QUESTION-(\d{3,})$")
-FOG_ID = re.compile(r"^FOG-(\d{3,})$")
-FOG_ENTRY = re.compile(r"^(FOG-\d{3,})\s+—\s+(.+)$")
+GNDN_ID = re.compile(r"^GNDN-(\d{3,})$")
+GNDN_ENTRY = re.compile(r"^(GNDN-\d{3,})\s+—\s+(.+)$")
 COUNTER = re.compile(
-    r"^- Next (map|question|fog):\s*`((?:MAP|QUESTION|FOG)-\d{3,})`\s*$",
+    r"^- Next (map|question|GNDN):\s*`((?:MAP|QUESTION|GNDN)-\d{3,})`\s*$",
     re.MULTILINE,
 )
 
@@ -28,7 +28,7 @@ MAP_ACTIVE_FIELDS = frozenset(
         "Destination",
         "Scope",
         "Notes",
-        "Fog",
+        "GNDN",
         "Out of scope",
         "Resolved questions",
         "Next action",
@@ -164,14 +164,14 @@ def index_planning_records(root: Path) -> PlanningRecordIndex:
     resolved_questions = set(questions) - active_questions
 
     dependencies: list[tuple[str, str]] = []
-    issued_fog_ids: set[str] = set()
-    active_fog_ids: set[str] = set()
+    issued_gndn_ids: set[str] = set()
+    active_gndn_ids: set[str] = set()
     for record in maps.values():
-        record_fog_ids = _validate_map(
-            record, resolved_questions, questions, issued_fog_ids, findings
+        record_gndn_ids = _validate_map(
+            record, resolved_questions, questions, issued_gndn_ids, findings
         )
         if record.state == "active":
-            active_fog_ids.update(record_fog_ids)
+            active_gndn_ids.update(record_gndn_ids)
     for record in questions.values():
         dependencies.extend(
             _validate_question(
@@ -179,8 +179,8 @@ def index_planning_records(root: Path) -> PlanningRecordIndex:
                 maps,
                 questions,
                 active_maps,
-                active_fog_ids,
-                issued_fog_ids,
+                active_gndn_ids,
+                issued_gndn_ids,
                 findings,
             )
         )
@@ -201,7 +201,7 @@ def index_planning_records(root: Path) -> PlanningRecordIndex:
 
     _validate_dependency_cycles(set(questions), dependencies, findings)
     _validate_counters(
-        active_text, set(maps), set(questions), issued_fog_ids, findings
+        active_text, set(maps), set(questions), issued_gndn_ids, findings
     )
 
     return PlanningRecordIndex(
@@ -301,7 +301,7 @@ def _validate_map(
     record: _Record,
     resolved_question_ids: set[str],
     questions: dict[str, _Record],
-    fog_ids: set[str],
+    gndn_ids: set[str],
     findings: list[PlanningRecordFinding],
 ) -> set[str]:
     for reference in _references(record.fields.get("Resolved questions")):
@@ -324,34 +324,34 @@ def _validate_map(
                 )
             )
 
-    fog = record.fields.get("Fog", "")
-    if _plain(fog).lower() in {"none", "not applicable"}:
+    gndn = record.fields.get("GNDN", "")
+    if _plain(gndn).lower() in {"none", "not applicable"}:
         return set()
-    record_fog_ids: set[str] = set()
-    for line in fog.splitlines():
+    record_gndn_ids: set[str] = set()
+    for line in gndn.splitlines():
         entry = line.removeprefix("- ").strip()
-        match = FOG_ENTRY.fullmatch(entry)
+        match = GNDN_ENTRY.fullmatch(entry)
         if not match:
             findings.append(
                 PlanningRecordFinding(
                     "ERROR",
-                    f"{record.identifier} has malformed Fog entry {entry}",
+                    f"{record.identifier} has malformed GNDN entry {entry}",
                     f"{record.source}:{record.line}",
                 )
             )
             continue
-        fog_id = match.group(1)
-        if fog_id in fog_ids:
+        gndn_id = match.group(1)
+        if gndn_id in gndn_ids:
             findings.append(
                 PlanningRecordFinding(
                     "ERROR",
-                    f"duplicate fog identifier {fog_id}",
+                    f"duplicate GNDN identifier {gndn_id}",
                     f"{record.source}:{record.line}",
                 )
             )
-        fog_ids.add(fog_id)
-        record_fog_ids.add(fog_id)
-    return record_fog_ids
+        gndn_ids.add(gndn_id)
+        record_gndn_ids.add(gndn_id)
+    return record_gndn_ids
 
 
 def _validate_question(
@@ -359,8 +359,8 @@ def _validate_question(
     maps: dict[str, _Record],
     questions: dict[str, _Record],
     active_map_ids: set[str],
-    active_fog_ids: set[str],
-    issued_fog_ids: set[str],
+    active_gndn_ids: set[str],
+    issued_gndn_ids: set[str],
     findings: list[PlanningRecordFinding],
 ) -> list[tuple[str, str]]:
     map_id = _plain(record.fields.get("Map", ""))
@@ -403,7 +403,7 @@ def _validate_question(
     origin = _plain(record.fields.get("Origin", ""))
     if (
         origin.lower() not in {"none", "not applicable", ""}
-        and not FOG_ID.fullmatch(origin)
+        and not GNDN_ID.fullmatch(origin)
     ):
         findings.append(
             PlanningRecordFinding(
@@ -412,16 +412,16 @@ def _validate_question(
                 f"{record.source}:{record.line}",
             )
         )
-    elif FOG_ID.fullmatch(origin):
-        if origin in active_fog_ids:
+    elif GNDN_ID.fullmatch(origin):
+        if origin in active_gndn_ids:
             findings.append(
                 PlanningRecordFinding(
                     "ERROR",
-                    f"{record.identifier} origin {origin} remains active fog",
+                    f"{record.identifier} origin {origin} remains active GNDN",
                     f"{record.source}:{record.line}",
                 )
             )
-        issued_fog_ids.add(origin)
+        issued_gndn_ids.add(origin)
 
     dependencies: list[tuple[str, str]] = []
     for field_name in ("Depends on", "Related to"):
@@ -496,13 +496,13 @@ def _validate_counters(
     text: str,
     map_ids: set[str],
     question_ids: set[str],
-    fog_ids: set[str],
+    gndn_ids: set[str],
     findings: list[PlanningRecordFinding],
 ) -> None:
     counter_entries = COUNTER.findall(text)
     counters = {kind: identifier for kind, identifier in counter_entries}
-    expected_prefix = {"map": "MAP", "question": "QUESTION", "fog": "FOG"}
-    identifiers = {"map": map_ids, "question": question_ids, "fog": fog_ids}
+    expected_prefix = {"map": "MAP", "question": "QUESTION", "GNDN": "GNDN"}
+    identifiers = {"map": map_ids, "question": question_ids, "GNDN": gndn_ids}
     for kind, prefix in expected_prefix.items():
         if sum(entry_kind == kind for entry_kind, _ in counter_entries) > 1:
             findings.append(
@@ -518,7 +518,7 @@ def _validate_counters(
                 )
             )
             continue
-        pattern = {"map": MAP_ID, "question": QUESTION_ID, "fog": FOG_ID}[kind]
+        pattern = {"map": MAP_ID, "question": QUESTION_ID, "GNDN": GNDN_ID}[kind]
         match = pattern.fullmatch(value)
         if not match or not value.startswith(prefix + "-"):
             findings.append(
